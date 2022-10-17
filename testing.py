@@ -1,5 +1,8 @@
 import os
-dir=''
+
+os.system("where /R H:\ code.ino")
+
+
 for x in range(ord('A'), ord('Z')+1):
     try:
         dir = f"{chr(x)}:/"
@@ -10,7 +13,7 @@ for x in range(ord('A'), ord('Z')+1):
                         if a=="Steam":
                             print('Yeees')
                             print(f"{chr(x)}:/{i}/{a}")
-                        elif a=="Discord":
+                        elif a=="":
                             print('Yeees')
                             print(f"{chr(x)}:/{i}/{a}")
                         elif a=="GitHub Desktop":
