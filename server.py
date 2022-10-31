@@ -5,15 +5,12 @@ import os
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((socket.gethostbyname_ex(socket.gethostname())[-1][-1], 4321))
 
-print(socket.gethostbyname_ex(socket.gethostname())[-1][-1])
-
 server.listen()
 
 while True:
     user, adres = server.accept()
     while True:
         data = user.recv(4096).decode("utf-8").lower()
-        print(data)
 
         if data == "youtube":
             webbrowser.open("https://www.youtube.com")

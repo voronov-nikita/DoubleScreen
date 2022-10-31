@@ -20,52 +20,52 @@ MyBL:
     pos_hint:{"center_x": 0.5, "center_y":0.5}
 
     Label:
-        font_size: "15sp"
+        font_size: "20sp"
         multiline:True
-        size_hint_x:1.0
+        size_hint_x:1
         size_hint_y:None
-        height: self.texture_size[1] + 15
+        height: self.texture_size[1]
         text: root.data_label
         
     TextInput:
         id: Inp
         multiline: False
         padding_y: (5,5)
-        size_hint: (1, 0.5)
+        size_hint: (1, 0.20)
         
     
     Button:
         text: "google"
         bold : True
-        background_color:'#00FFCE'
-        size_hint: (1, 0.5)
+        background_color:'#000080'
+        size_hint: (1, 0.25)
         on_press: root.click1()
         
     Button:
         text: "мэш"
         bold : True
-        background_color:'#00FFCE'
-        size_hint: (1, 0.5)
+        background_color:'#000080'
+        size_hint: (1, 0.25)
         on_press: root.click2()
         
     Button:
         text: "youtube"
         bold : True
-        background_color:'#00FFCE'
-        size_hint: (1, 0.5)
+        background_color:'#000080'
+        size_hint: (1, 0.25)
         on_press: root.click3()
         
     Button:
         text: "vk"
         bold : True
-        background_color:'#00FFCE'
-        size_hint: (1, 0.5)
+        background_color:'#000080'
+        size_hint: (1, 0.25)
         on_press: root.click4()
 """
 
 
 class MyBL(BoxLayout):
-    data_label = StringProperty("Треугольник")
+    data_label = StringProperty("Подключено!")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -104,7 +104,7 @@ class MyBL(BoxLayout):
 
 class ErrorApp(App):
     image = True
-    txt = "Ошибка сервера, немного подождите"
+    txt1 = "Ошибка сервера, немного подождите"
 
     def error_event(self):
         self.lbl.text = "       Пишите сюда: \n voronovnr_1@mail.ru"
@@ -113,21 +113,22 @@ class ErrorApp(App):
             self.image = False
 
     def build(self):
-        bx = BoxLayout(orientation="vertical")
+        self.bx = BoxLayout(orientation="vertical")
         self.gr = GridLayout(rows=1)
-        self.lbl = Label(text=self.txt,
+        self.lbl = Label(text=self.txt1,
                          font_size="30sp")
         self.img = Image(source="QR-email.png")
 
         self.gr.add_widget(self.lbl)
-        bx.add_widget(self.gr)
-        bx.add_widget(Button(text="Свяжитесь с нами",
+        self.bx.add_widget(self.gr)
+        self.bx.add_widget(Button(text="Помощь",
                              bold=True,
-                             background_color='#00FFCE',
+                             font_size = "30sp",
+                             background_color='#000080',
                              size_hint=(1, 0.5),
                              on_press=lambda x: self.error_event()
                              ))
-        return bx
+        return self.bx
 
 
 class MyApp(App):
