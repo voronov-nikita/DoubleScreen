@@ -1,11 +1,13 @@
 from kivy.app import App
 from kivy.lang.builder import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.properties import StringProperty
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.clock import mainthread
+from kivy.uix.image import Image
 
 import socket
 import threading
@@ -101,17 +103,24 @@ class MyBL(BoxLayout):
 
 
 class ErrorApp(App):
+    image = True
     txt = "Ошибка сервера, немного подождите"
 
     def error_event(self):
         self.lbl.text = "       Пишите сюда: \n voronovnr_1@mail.ru"
+        if self.image:
+            self.gr.add_widget(self.img)
+            self.image = False
 
     def build(self):
         bx = BoxLayout(orientation="vertical")
+        self.gr = GridLayout(rows=1)
         self.lbl = Label(text=self.txt,
                          font_size="30sp")
+        self.img = Image(source="QR-email.png")
 
-        bx.add_widget(self.lbl)
+        self.gr.add_widget(self.lbl)
+        bx.add_widget(self.gr)
         bx.add_widget(Button(text="Свяжитесь с нами",
                              bold=True,
                              background_color='#00FFCE',
