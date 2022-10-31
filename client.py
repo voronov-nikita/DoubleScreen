@@ -12,6 +12,8 @@ from kivy.uix.image import Image
 import socket
 import threading
 
+my_app_is_run = True
+
 KV = """
 MyBL:
 
@@ -65,6 +67,7 @@ MyBL:
 
 
 class MyBL(BoxLayout):
+    global my_app_is_run
     data_label = StringProperty("Подключено!")
 
     def __init__(self, **kwargs):
@@ -96,21 +99,33 @@ class MyBL(BoxLayout):
             print("От сервера:", in_data.decode())
             kkk = in_data.decode()
             self.set_data_label(kkk)
+        else:
+            self.my_app_is_run = False
 
     @mainthread
     def set_data_label(self, data):
         self.data_label += str(data) + "\n"
 
 
-class ErrorApp(App):
+# Ошибка сервера
+class ErrorServerApp(App):
     image = True
     txt1 = "Ошибка сервера, немного подождите"
+    txt2 = "Помощь"
 
+    # По кнопке при экране ошибки
     def error_event(self):
-        self.lbl.text = "       Пишите сюда: \n voronovnr_1@mail.ru"
-        if self.image:
-            self.gr.add_widget(self.img)
-            self.image = False
+        if self.btn1.text == "Помощь":
+            self.btn1.text = "Назад"
+            self.lbl.text = "       Пишите сюда: \n voronovnr_1@mail.ru"
+            if self.image:
+                self.gr.add_widget(self.img)
+                self.image = False
+        elif self.btn1.text == "Назад":
+            self.image = True
+            self.btn1.text = "Помощь"
+            self.lbl.text = "Ошибка сервера, немного подождите"
+            self.gr.remove_widget(self.img)
 
     def build(self):
         self.bx = BoxLayout(orientation="vertical")
@@ -119,18 +134,21 @@ class ErrorApp(App):
                          font_size="30sp")
         self.img = Image(source="QR-email.png")
 
+        self.btn1 = Button(text=self.txt2,
+                           bold=True,
+                           font_size="30sp",
+                           background_color='#000080',
+                           size_hint=(1, 0.5),
+                           on_press=lambda x: self.error_event()
+                           )
+
         self.gr.add_widget(self.lbl)
         self.bx.add_widget(self.gr)
-        self.bx.add_widget(Button(text="Помощь",
-                             bold=True,
-                             font_size = "30sp",
-                             background_color='#000080',
-                             size_hint=(1, 0.5),
-                             on_press=lambda x: self.error_event()
-                             ))
+        self.bx.add_widget(self.btn1)
         return self.bx
 
 
+# Основное приложение
 class MyApp(App):
     running = True
 
@@ -145,4 +163,4 @@ if __name__ == "__main__":
     try:
         MyApp().run()
     except ConnectionRefusedError:
-        ErrorApp().run()
+        ErrorServerApp().run()

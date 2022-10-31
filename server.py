@@ -21,7 +21,7 @@ while True:
         elif data == "vk":
             webbrowser.open("https://www.vk.com")
 
-        elif data=="steam":
+        elif data == "steam":
             os.startfile("C:/Program Files (x86)/Steam/steam.exe")
-        elif data=="discord":
+        elif data == "discord":
             os.startfile("C:/Users/MSI/AppData/Local/Discord/app-1.0.9006/Discord.exe")
