@@ -12,7 +12,7 @@ server.listen()
 while True:
     user, adres = server.accept()
     while True:
-        data = user.recv(1024).decode("utf-8").lower()
+        data = user.recv(4096).decode("utf-8").lower()
         print(data)
 
         if data == "youtube":
