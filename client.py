@@ -12,8 +12,6 @@ from kivy.uix.image import Image
 import socket
 import threading
 
-my_app_is_run = True
-
 KV = """
 MyBL:
 
@@ -28,35 +26,35 @@ MyBL:
         size_hint_y:None
         height: self.texture_size[1]
         text: root.data_label
-        
+
     TextInput:
         id: Inp
         multiline: False
         padding_y: (5,5)
         size_hint: (1, 0.20)
-        
-    
+
+
     Button:
         text: "google"
         bold : True
         background_color:'#000080'
         size_hint: (1, 0.25)
         on_press: root.click1()
-        
+
     Button:
         text: "мэш"
         bold : True
         background_color:'#000080'
         size_hint: (1, 0.25)
         on_press: root.click2()
-        
+
     Button:
         text: "youtube"
         bold : True
         background_color:'#000080'
         size_hint: (1, 0.25)
         on_press: root.click3()
-        
+
     Button:
         text: "vk"
         bold : True
@@ -64,6 +62,8 @@ MyBL:
         size_hint: (1, 0.25)
         on_press: root.click4()
 """
+
+my_app_is_run = True
 
 
 class MyBL(BoxLayout):

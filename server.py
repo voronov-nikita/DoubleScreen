@@ -2,26 +2,39 @@ import socket
 import webbrowser
 import os
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((socket.gethostbyname_ex(socket.gethostname())[-1][-1], 4321))
 
-server.listen()
+def start():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind((socket.gethostbyname_ex(socket.gethostname())[-1][-1], 4321))
 
-while True:
-    user, adres = server.accept()
+    print(socket.gethostbyname_ex(socket.gethostname())[-1][-1])
+
+    server.listen()
+
     while True:
-        data = user.recv(4096).decode("utf-8").lower()
+        user, adres = server.accept()
+        while True:
+            data = user.recv(4096).decode("utf-8").lower()
 
-        if data == "youtube":
-            webbrowser.open("https://www.youtube.com")
-        elif data == "мэш":
-            webbrowser.open("https://school.mos.ru")
-        elif data == "google":
-            webbrowser.open("https://www.google.com")
-        elif data == "vk":
-            webbrowser.open("https://www.vk.com")
+            if data == "youtube":
+                webbrowser.open("https://www.youtube.com")
+            elif data == "мэш":
+                webbrowser.open("https://school.mos.ru")
+            elif data == "google":
+                webbrowser.open("https://www.google.com")
+            elif data == "vk":
+                webbrowser.open("https://www.vk.com")
 
-        elif data == "steam":
-            os.startfile("C:/Program Files (x86)/Steam/steam.exe")
-        elif data == "discord":
-            os.startfile("C:/Users/MSI/AppData/Local/Discord/app-1.0.9006/Discord.exe")
+            elif data == "steam":
+                os.startfile("C:/Program Files (x86)/Steam/steam.exe")
+            elif data == "discord":
+                os.startfile("C:/Users/MSI/AppData/Local/Discord/app-1.0.9006/Discord.exe")
+
+def error():
+    print("error")
+
+
+try:
+    start()
+except:
+   error()
