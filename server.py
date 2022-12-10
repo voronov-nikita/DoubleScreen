@@ -1,40 +1,63 @@
 import socket
-import webbrowser
-import os
+
+from os import getlogin
+
+from PIL import Image  # изображение
+import io
+import numpy as np
+from random import randint
+import pyautogui    #много назначений
+
+from threading import Thread  # потоки
+
+import sys
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QLabel, QPushButton, QAction, QMessageBox
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import QRect, Qt
+
+IP = socket.gethostbyname(socket.gethostname())
+PORT = 9999
+
+print("STARTED")
+print(IP)
+print(PORT)
+sock = socket.socket()
+sock.bind((IP, PORT))  # к серверу
+sock.listen(1)  # максимум одно подключение
+conn, addr = sock.accept()
 
 
-def start():
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((socket.gethostbyname_ex(socket.gethostname())[-1][-1], 4321))
+class Dekstop(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.init_UI()
 
-    print(socket.gethostbyname_ex(socket.gethostname())[-1][-1])
+    def ChangeImage(self):
+        try:
+            print("[SERVER]: CONNECTED: {0}!".format(addr[0]))
+            while True:
+                img_bytes = conn.recv(9999999)
+                self.pixmap.loadFromData(img_bytes)
+                self.label.setScaledContents(True)
+                self.label.resize(self.width(), self.height())
+                self.label.setPixmap(self.pixmap)
+        except ConnectionResetError:
+            QMessageBox.about(self, "ERROR", "Error Client")
+            conn.close()
 
-    server.listen()
-
-    while True:
-        user, adres = server.accept()
-        while True:
-            data = user.recv(4096).decode("utf-8").lower()
-
-            if data == "youtube":
-                webbrowser.open("https://www.youtube.com")
-            elif data == "мэш":
-                webbrowser.open("https://school.mos.ru")
-            elif data == "google":
-                webbrowser.open("https://www.google.com")
-            elif data == "vk":
-                webbrowser.open("https://www.vk.com")
-
-            elif data == "steam":
-                os.startfile("C:/Program Files (x86)/Steam/steam.exe")
-            elif data == "discord":
-                os.startfile("C:/Users/MSI/AppData/Local/Discord/app-1.0.9006/Discord.exe")
-
-def error():
-    print("error")
+    def init_UI(self):
+        self.pixmap = QPixmap()
+        self.label = QLabel(self)
+        self.label.resize(self.width(), self.height())
+        self.setGeometry(QRect(pyautogui.size()[0] // 4, pyautogui.size()[1] // 4, 800, 450))
+        self.setFixedSize(self.width(), self.height())
+        self.setWindowTitle("server" + str(randint(99999, 999999)))
+        self.start = Thread(target=self.ChangeImage, daemon=True)
+        self.start.start()
 
 
-try:
-    start()
-except:
-   error()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Dekstop()
+    ex.show()
+    sys.exit(app.exec())

@@ -1,166 +1,66 @@
-from kivy.app import App
-from kivy.lang.builder import Builder
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.properties import StringProperty
-from kivy.uix.label import Label
-from kivy.uix.button import Button
-from kivy.uix.textinput import TextInput
-from kivy.clock import mainthread
-from kivy.uix.image import Image
-
 import socket
-import threading
 
-KV = """
-MyBL:
+from PIL import ImageGrab
+import io
+import numpy as np
+from random import randint
+import pyautogui
 
-    orientation:"vertical"
-    size_hint:(0.95, 0.95)
-    pos_hint:{"center_x": 0.5, "center_y":0.5}
+from threading import Thread
 
-    Label:
-        font_size: "20sp"
-        multiline:True
-        size_hint_x:1
-        size_hint_y:None
-        height: self.texture_size[1]
-        text: root.data_label
-
-    TextInput:
-        id: Inp
-        multiline: False
-        padding_y: (5,5)
-        size_hint: (1, 0.20)
+import sys
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QLabel, QPushButton, QAction, QMessageBox, QLineEdit
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import QRect, Qt
 
 
-    Button:
-        text: "google"
-        bold : True
-        background_color:'#000080'
-        size_hint: (1, 0.25)
-        on_press: root.click1()
+class Dekstop(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
 
-    Button:
-        text: "мэш"
-        bold : True
-        background_color:'#000080'
-        size_hint: (1, 0.25)
-        on_press: root.click2()
+    def StartThread(self):
+        self.start.start()
 
-    Button:
-        text: "youtube"
-        bold : True
-        background_color:'#000080'
-        size_hint: (1, 0.25)
-        on_press: root.click3()
+    def ChangeImage(self):
+        try:
+            if len(self.ip.text()) != 0 and len(self.port.text()):
+                sock = socket.socket()
+                sock.connect((self.ip.text(), int(self.port.text())))
+                while True:
+                    img = ImageGrab.grab()
+                    img_bytes = io.BytesIO()
+                    img.save(img_bytes, format='PNG')
+                    sock.send(img_bytes.getvalue())
+                sock.close()
+        except:
+            print("DISCONNECTED")
 
-    Button:
-        text: "vk"
-        bold : True
-        background_color:'#000080'
-        size_hint: (1, 0.25)
-        on_press: root.click4()
-"""
-
-my_app_is_run = True
-
-
-class MyBL(BoxLayout):
-    global my_app_is_run
-    data_label = StringProperty("Подключено!")
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        SERVER = socket.gethostbyname_ex(socket.gethostname())[-1][-1]
-        PORT = 4321
-
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((SERVER, PORT))
-        self.client.sendall(bytes("979879789", 'UTF-8'))
-
-        threading.Thread(target=self.get_data).start()
-
-    def click1(self):
-        self.client.sendall(bytes("google", 'UTF-8'))
-
-    def click2(self):
-        self.client.sendall(bytes("мэш", 'UTF-8'))
-
-    def click3(self):
-        self.client.sendall(bytes("youtube", 'UTF-8'))
-
-    def click4(self):
-        self.client.sendall(bytes("vk", 'UTF-8'))
-
-    def get_data(self):
-        while App.get_running_app().running:
-            in_data = self.client.recv(4096)
-            print("От сервера:", in_data.decode())
-            kkk = in_data.decode()
-            self.set_data_label(kkk)
-        else:
-            self.my_app_is_run = False
-
-    @mainthread
-    def set_data_label(self, data):
-        self.data_label += str(data) + "\n"
+    def initUI(self):
+        self.pixmap = QPixmap()
+        self.label = QLabel(self)
+        self.label.resize(self.width(), self.height())
+        self.setGeometry(QRect(pyautogui.size()[0] // 4, pyautogui.size()[1] // 4, 400, 90))
+        self.setFixedSize(self.width(), self.height())
+        self.setWindowTitle("main" + str(randint(99999, 999999)))
+        self.start = Thread(target=self.ChangeImage, daemon=True)
+        self.btn = QPushButton(self)
+        self.btn.move(5, 55)
+        self.btn.resize(390, 30)
+        self.btn.setText("Connect")
+        self.btn.clicked.connect(self.StartThread)
+        self.ip = QLineEdit(self)
+        self.ip.move(5, 5)
+        self.ip.resize(390, 20)
+        self.ip.setPlaceholderText("IP-adress")
+        self.port = QLineEdit(self)
+        self.port.move(5, 30)
+        self.port.resize(390, 20)
+        self.port.setPlaceholderText("PORT-connect")
 
 
-# Ошибка сервера
-class ErrorServerApp(App):
-    image = True
-    txt1 = "Ошибка сервера, немного подождите"
-    txt2 = "Помощь"
-
-    # По кнопке при экране ошибки
-    def error_event(self):
-        if self.btn1.text == "Помощь":
-            self.btn1.text = "Назад"
-            self.lbl.text = "       Пишите сюда: \n voronovnr_1@mail.ru"
-            if self.image:
-                self.gr.add_widget(self.img)
-                self.image = False
-        elif self.btn1.text == "Назад":
-            self.image = True
-            self.btn1.text = "Помощь"
-            self.lbl.text = "Ошибка сервера, немного подождите"
-            self.gr.remove_widget(self.img)
-
-    def build(self):
-        self.bx = BoxLayout(orientation="vertical")
-        self.gr = GridLayout(rows=1)
-        self.lbl = Label(text=self.txt1,
-                         font_size="30sp")
-        self.img = Image(source="QR-email.png")
-
-        self.btn1 = Button(text=self.txt2,
-                           bold=True,
-                           font_size="30sp",
-                           background_color='#000080',
-                           size_hint=(1, 0.5),
-                           on_press=lambda x: self.error_event()
-                           )
-
-        self.gr.add_widget(self.lbl)
-        self.bx.add_widget(self.gr)
-        self.bx.add_widget(self.btn1)
-        return self.bx
-
-
-# Основное приложение
-class MyApp(App):
-    running = True
-
-    def build(self):
-        return Builder.load_string(KV)
-
-    def on_stop(self):
-        self.running = False
-
-
-if __name__ == "__main__":
-    try:
-        MyApp().run()
-    except ConnectionRefusedError:
-        ErrorServerApp().run()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Dekstop()
+    ex.show()
+    sys.exit(app.exec())
