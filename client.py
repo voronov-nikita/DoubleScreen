@@ -1,3 +1,6 @@
+# <<---------------------- отправляет рабочий стол --------------------->>
+# <<--------------------- принимает координаты мыши --------------------->>
+
 import socket
 
 # import keyboard - пока не потребуется
@@ -18,6 +21,7 @@ from PyQt5.QtCore import QRect, Qt
 class Dekstop(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.txt = "Connected"
         self.init_UI_Interact()
 
     def StartThread(self):
@@ -32,22 +36,45 @@ class Dekstop(QMainWindow):
                     # <------------------Считывается и обрабатывается информация------------------>
                     img = ImageGrab.grab()  # считываем данные экрана
                     img_bytes = io.BytesIO()
-                    img.save(img_bytes, format='PNG')
+                    img.save(img_bytes, format='PNG', )  # типо НЕ сжимаем изображение
 
-                    mouse_x, mouse_y = map(int, pyautogui.position())  # считываем координа мыши
 
                     # <------------------Отправка на Сервер------------------>
                     sock.send(img_bytes.getvalue())  # отправляем скриншот
 
-                    sock.send(str(mouse_x).encode('utf-8'))  # отправляем координаты мыши по X
-                    sock.send(" ".encode('utf-8'))  # для разделения координат x/y
-                    sock.send(str(mouse_y).encode('utf-8'))  # отправляем координаты мыши по Y
+                    # <------------------Принимаем с Сервера------------------>
+                    # k = 0
+                    # rmouseclk = False  # обнуляем проверку на клик правой кнопкой
+                    # lmouseclk = False  # обнуляем проверку на клик левой кнопкой
+                    # data = sock.recv(99999999)  # Принимаем данные с сервера
+                    # try:
+                    #     if data.decode('utf-8'):  # проверка можно ли декодировать
+                    #         # <-----------Проверить на получение нажатия----------->
+                    #         if "R" in ''.join(data.decode('utf-8')):  # проверка нажатия правой кнопки мыши
+                    #             rmouseclk = True
+                    #         if "L" in ''.join(data.decode('utf-8')):  # проверка нажатия левой кнопкой мыши
+                    #             lmouseclk = True
+                    #
+                    #         new_data = data.decode('utf-8').split()
+                    #         print(new_data)
+                    #         if k == 0:
+                    #             self.mouse_x = int(new_data[0])  # задаем значение для X
+                    #             k = 1
+                    #         else:
+                    #             self.mouse_y = int(new_data[-1])  # задаем значение для Y
+                    #             k = 0
+                    #             if rmouseclk:
+                    #                 pyautogui.mouseDown(button='left')   # нажать на левую кнопку
+                    #             if lmouseclk:
+                    #                 pyautogui.mouseDown(button='right')  # нажать на правую кнопку
+                    #
+                    #             pyautogui.moveTo(self.mouse_x,
+                    #                              self.mouse_y)  # для того, чтобы менять координаты мыши на то, что выдает клиент
+                    #
+                    #
+                    # except UnicodeDecodeError:
+                    #     print("Error decode")
 
-                    # <------------Нуждается в доработке------------>
-                    # if mouse.is_pressed(button="left"):
-                    #     sock.send("LMouseClick".encode('utf-8'))
-                    # if mouse.is_pressed(button="right"):
-                    #     sock.send("RMouseClick".encode('utf-8'))
         except ConnectionResetError:
             print("DISCONNECTED")
 
@@ -64,13 +91,13 @@ class Dekstop(QMainWindow):
         self.btn = QPushButton(self)
         self.btn.move(5, 55)
         self.btn.resize(490, 50)
-        self.btn.setText("Connect")
         self.btn.clicked.connect(self.StartThread)
-        self.ip = QLineEdit(self)
+        self.btn.setText(self.txt)  # текст кнопки
+        self.ip = QLineEdit(self)  # IP-info
         self.ip.move(5, 5)
         self.ip.resize(490, 30)
         self.ip.setPlaceholderText("IP-adress")
-        self.port = QLineEdit(self)
+        self.port = QLineEdit(self)  # PORT- info
         self.port.move(5, 30)
         self.port.resize(490, 30)
         self.port.setPlaceholderText("PORT-connect")
