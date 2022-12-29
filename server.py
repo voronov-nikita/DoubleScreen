@@ -1,5 +1,10 @@
-import socket
+# <<---------------------- принимает рабочий стол --------------------->>
+# <<---------------------- отправляет координаты мыши --------------------->>
 
+import socket
+import threading
+
+import mouse
 from PIL import Image  # изображение
 
 import pyautogui  # много назначений
@@ -7,7 +12,7 @@ import pyautogui  # много назначений
 from threading import Thread  # потоки
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QLabel, QPushButton, QAction, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel,QMessageBox
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect, Qt
 
@@ -19,53 +24,42 @@ print(f"IP-adress: {IP}")
 print(f"PORT-connected: {PORT}")
 sock = socket.socket()  # создаем сокет
 sock.bind((IP, PORT))  # к серверу
-sock.listen()
-conn, addr = sock.accept()
+
+
+class ClientTheard(threading.Thread):
+    def __init__(self, addr, conn):
+        threading.Thread.__init__(self)
+        self.conn = conn
+        print("Подключился:", addr)
+
+    def run(self):
+        app = QApplication(sys.argv)
+        ex = Dekstop(conn)
+        ex.show()
+        sys.exit(app.exec())
 
 
 class Dekstop(QMainWindow):
-    def __init__(self):
+    def __init__(self, conn):
         super().__init__()
+        self.conn = conn
         self.initUI()
         self.mouse_x, self.mouse_y = map(int, pyautogui.position())
 
     def ChangeImage(self):
         try:
             while True:
-                rmouseclk = False  # обнуляем проверку на клик правой кнопкой
-                lmouseclk = False  # обнуляем проверку на клик левой кнопкой
-                data = conn.recv(99999999)  # Принимаем данные с клиента
-                try:
-                    if data.decode('utf-8'):  # проверка можно ли декодировать
-
-                        # <-----------Проверить на получение нажатия----------->
-                        if data.decode('utf-8') == "RMouseClick":  # проверка нажатия правой кнопки мыши
-                            rmouseclk = True
-                        if data.decode('utf-8') == "LMouseClick":  # проверка нажатия левой кнопкой мыши
-                            lmouseclk = True
-
-                        self.mouse_x = int(data.decode('utf-8').split()[0])  # задаем значение для X
-                        self.mouse_y = int(data.decode('utf-8').split()[1])  # задаем значение для Y
-
-                except UnicodeDecodeError:
-                    full = self.pixmap.loadFromData(data)
-                    if full:
-                        self.pixmap.loadFromData(data)
-                        self.label.setScaledContents(True)
-                        self.label.resize(self.width(), self.height())
-                        self.label.setPixmap(self.pixmap)
-
-                        # <----------------Требует доработки----------------->
-                        ## if rmouseclk:
-                        ##     pyautogui.mouseDown(button='left')   # нажать на левую кнопку
-                        ## if lmouseclk:
-                        ##     pyautogui.mouseDown(button='right')  # нажать на правую кнопку
-                        # pyautogui.moveTo(self.mouse_x, self.mouse_y, 2)  # для того, чтобы менять координаты мыши на то, что выдает клиент
-
-
+                data = self.conn.recv(999999)  # Принимаем данные с клиента
+                full = self.pixmap.loadFromData(data)
+                if full:
+                    self.pixmap.loadFromData(data)
+                    self.label.setScaledContents(True)
+                    self.label.resize(self.width(), self.height())
+                    self.label.setPixmap(self.pixmap)
+                # self.mouse_control()
         except ConnectionResetError:
-            QMessageBox.about(self, "ERROR", "Error Client")
-            conn.close()
+            QMessageBox.about(self, "ERROR", "  Error    Client    ")
+            self.conn.close()
 
     def initUI(self):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
@@ -73,15 +67,35 @@ class Dekstop(QMainWindow):
         self.label = QLabel(self)
         self.label.resize(self.width(), self.height())
         x, y = map(int, pyautogui.size())  # размеры экрана
-        self.setGeometry(QRect(x // 4, y // 4, 800, 450))  # окно проецирования
+        self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
-        self.setWindowTitle("server")
+        self.setWindowTitle(str(addr))
         self.start = Thread(target=self.ChangeImage, daemon=True)
         self.start.start()
 
+    def mouse_control(self):
+        mouse_x, mouse_y = map(int, pyautogui.position())  # считываем координа мыши
+        self.conn.send(str(mouse_x).encode('utf-8'))  # отправляем координаты мыши по X
+        self.conn.send(" ".encode('utf-8'))  # для разделения координат x/y
+        self.conn.send(str(mouse_y).encode('utf-8'))  # отправляем координаты мыши по Y
+
+        # <------------Нуждается в доработке------------>
+        if mouse.is_pressed(button="left"):
+            self.conn.send("LMouseClick".encode('utf-8'))
+            self.conn.send(" ".encode('utf-8'))
+        elif mouse.is_pressed(button="right"):
+            self.conn.send("RMouseClick".encode('utf-8'))
+            self.conn.send(" ".encode('utf-8'))
+        else:
+            mouse_x, mouse_y = map(int, pyautogui.position())  # считываем координа мыши
+            self.conn.send(str(mouse_x).encode('utf-8'))  # отправляем координаты мыши по X
+            self.conn.send(" ".encode('utf-8'))  # для разделения координат x/y
+            self.conn.send(str(mouse_y).encode('utf-8'))  # отправляем координаты мыши по Y
+
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Dekstop()
-    ex.show()
-    sys.exit(app.exec())
+    while True:
+        sock.listen()
+        conn, addr = sock.accept()
+        new_thread = ClientTheard(addr, conn)
+        new_thread.start()
