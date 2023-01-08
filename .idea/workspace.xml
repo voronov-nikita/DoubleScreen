@@ -6,30 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/COLLECT-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/COLLECT-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/client.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/client.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/warn-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/warn-client.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/client/xref-client.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/client/xref-client.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/COLLECT-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/COLLECT-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/server.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/server.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/server.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/warn-server.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/warn-server.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/server/xref-server.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/server/xref-server.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/client/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/dist/client/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/client/client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/client/client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/server/server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server/server.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +38,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../parsing_saits_v_01" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -66,6 +46,27 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.client (1)">
+    <configuration name="MainApp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="individual-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MainApp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="client (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="individual-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -171,34 +172,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="testing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="individual-project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testing.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.client (1)" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.client_test" />
+        <item itemvalue="Python.MainApp" />
         <item itemvalue="Python.server_test" />
-        <item itemvalue="Python.testing" />
       </list>
     </recent_temporary>
   </component>
