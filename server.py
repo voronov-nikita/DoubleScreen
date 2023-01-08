@@ -45,6 +45,11 @@ class Dekstop(QMainWindow):
         self.initUI()
         self.mouse_x, self.mouse_y = map(int, pyautogui.position())
 
+    def Grid_add(self):
+        for i in range(threading.active_count()):
+            for j in range(threading.active_count()):
+                self.grid.addWidget(self.label, i, j)
+
     def ChangeImage(self):
         try:
             while True:
