@@ -12,7 +12,7 @@ import pyautogui  # много назначений
 from threading import Thread  # потоки
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel,QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect, Qt
 
@@ -29,7 +29,6 @@ sock.bind((IP, PORT))  # к серверу
 class ClientTheard(threading.Thread):
     def __init__(self, addr, conn):
         threading.Thread.__init__(self)
-        self.conn = conn
         print("Подключился:", addr)
 
     def run(self):
@@ -56,21 +55,24 @@ class Dekstop(QMainWindow):
                     self.label.setScaledContents(True)
                     self.label.resize(self.width(), self.height())
                     self.label.setPixmap(self.pixmap)
+                    self.grid.addWidget(self.label, 0, 1)
                 # self.mouse_control()
         except ConnectionResetError:
-            QMessageBox.about(self, "ERROR", "  Error    Client    ")
+            QMessageBox.about(self, "   ERROR   ", "  Error    Client    ")
             self.conn.close()
 
     def initUI(self):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
         self.pixmap = QPixmap()
         self.label = QLabel(self)
+        self.grid = QGridLayout()
         self.label.resize(self.width(), self.height())
         x, y = map(int, pyautogui.size())  # размеры экрана
         self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
-        self.setWindowTitle(str(addr))
+        self.setLayout(self.grid)
         self.start = Thread(target=self.ChangeImage, daemon=True)
+        self.setWindowTitle(str(addr))
         self.start.start()
 
     def mouse_control(self):

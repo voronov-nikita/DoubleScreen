@@ -1,19 +1,40 @@
-import socket
-import json
 
-# создаём сокет и связываем его с IP-адресом и портом
-
-sock = socket.socket()
-ip = "192.168.0.14"
-port = 9999
-sock.bind((ip, port))
+import sys
+from PyQt5.QtWidgets import (QWidget, QPushButton,
+    QHBoxLayout, QVBoxLayout, QApplication)
 
 
-sock.listen(10)
+class Example(QWidget):
 
-while True:
-    # начинаем принимать соединения
-    conn, addr = sock.accept()
+    def __init__(self):
+        super().__init__()
 
-    ls = [1, 2, 3, 4, 5]
-    conn.send(json.dumps(ls).encode('utf-8'))
+        self.initUI()
+
+
+    def initUI(self):
+
+        okButton = QPushButton("OK")
+        cancelButton = QPushButton("Cancel")
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(okButton)
+        hbox.addWidget(cancelButton)
+
+        vbox = QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addLayout(hbox)
+
+        self.setLayout(vbox)
+
+        self.setGeometry(300, 300, 300, 150)
+        self.setWindowTitle('Buttons')
+        self.show()
+
+
+if __name__ == '__main__':
+
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
