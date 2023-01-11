@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +42,7 @@
       <recent name="C:\Users\MSI\Documents\GitHub\individual-project" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.client (1)">
+  <component name="RunManager" selected="Python.server">
     <configuration name="MainApp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="individual-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -171,8 +171,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.client (1)" />
         <item itemvalue="Python.server" />
+        <item itemvalue="Python.client (1)" />
         <item itemvalue="Python.client_test" />
         <item itemvalue="Python.MainApp" />
         <item itemvalue="Python.server_test" />
