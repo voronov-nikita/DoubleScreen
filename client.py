@@ -36,11 +36,11 @@ class DekstopApp(QMainWindow):
                     # <------------------Считывается и обрабатывается информация------------------>
                     img = ImageGrab.grab()  # считываем данные экрана
                     img_bytes = io.BytesIO()
-                    img.save(img_bytes, format='PNG', )  # типо НЕ сжимаем изображение
+                    img.save(img_bytes, format='JPEG', optimize=True, progressive=True)  # типо НЕ сжимаем изображение
 
                     # <------------------Отправка на Сервер------------------>
                     sock.send(img_bytes.getvalue())  # отправляем скриншот
-                    #sock.send(bytes(" "))
+                    # sock.send(bytes(" "))
 
                     # <------------------Принимаем с Сервера------------------>
                     # k = 0
