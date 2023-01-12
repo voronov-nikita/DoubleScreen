@@ -13,15 +13,16 @@ import pyautogui
 from threading import Thread
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QLabel, QPushButton, QAction, QMessageBox, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtCore import QRect
 
 
-class DekstopApp(QWidget):
+class DekstopApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.txt = "Connected"
+        self.pixmap = QPixmap()
+        self.label = QLabel(self)
         self.init_UI_Interact()
 
     def StartThread(self):
@@ -80,9 +81,7 @@ class DekstopApp(QWidget):
 
     def init_UI_Interact(self):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого окна приветствия
-        self.pixmap = QPixmap()
-        label = QLabel(self)
-        label.resize(self.width(), self.height())
+        self.label.resize(self.width(), self.height())
         x, y = map(int, pyautogui.size())  # размеры экрана
 
         self.setGeometry(QRect(x // 3, y // 3, 500, 100))  # окно-подключение
@@ -94,7 +93,7 @@ class DekstopApp(QWidget):
         self.btn.move(5, 55)
         self.btn.resize(490, 50)
         self.btn.clicked.connect(self.StartThread)
-        self.btn.setText(self.txt)  # текст кнопки
+        self.btn.setText("Connected")  # текст кнопки
 
         self.ip = QLineEdit(self)  # IP-info
         self.ip.move(5, 5)

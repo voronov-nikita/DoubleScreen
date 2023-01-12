@@ -14,7 +14,7 @@ from threading import Thread  # потоки
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtCore import QRect
 
 IP = socket.gethostbyname_ex(socket.gethostname())[-1][-1]
 PORT = 9999
@@ -25,22 +25,29 @@ print(f"PORT-connected: {PORT}")
 sock = socket.socket()  # создаем сокет
 sock.bind((IP, PORT))  # к серверу
 
+grid = QGridLayout()
+
 
 class ClientTheard(threading.Thread):
     def __init__(self, addr, conn):
+        self.conn = conn
+        self.grid = grid
         threading.Thread.__init__(self)
         print("Подключился:", addr)
 
     def run(self):
-        app = QApplication(sys.argv)
-        ex = Dekstop(conn)
-        ex.show()
-        sys.exit(app.exec())
+        ex = Dekstop(self.conn)
+        for colls in range(threading.active_count()):
+            for rows in range(threading.active_count()):
+                self.grid.addWidget(ex.label, colls, rows)
 
 
 class Dekstop(QMainWindow):
     def __init__(self, conn):
         super().__init__()
+        self.pixmap = QPixmap()
+        self.label = QLabel(self)
+        self.grid = grid
         self.conn = conn
         self.initUI()
         self.mouse_x, self.mouse_y = map(int, pyautogui.position())
@@ -60,7 +67,7 @@ class Dekstop(QMainWindow):
                     self.label.setScaledContents(True)
                     self.label.resize(self.width(), self.height())
                     self.label.setPixmap(self.pixmap)
-                    self.grid.addWidget(self.label, 0, 1)
+                    self.grid.addWidget(self.label, 1, 0)
                 # self.mouse_control()
         except ConnectionResetError:
             QMessageBox.about(self, "   ERROR   ", "  Error    Client    ")
@@ -68,9 +75,6 @@ class Dekstop(QMainWindow):
 
     def initUI(self):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
-        self.pixmap = QPixmap()
-        self.label = QLabel(self)
-        self.grid = QGridLayout()
         self.label.resize(self.width(), self.height())
         x, y = map(int, pyautogui.size())  # размеры экрана
         self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования
@@ -104,5 +108,7 @@ if __name__ == '__main__':
     while True:
         sock.listen()
         conn, addr = sock.accept()
-        new_thread = ClientTheard(addr, conn)
-        new_thread.start()
+        app = QApplication(sys.argv)
+        ex = Dekstop(conn)
+        ex.show()
+        sys.exit(app.exec())
