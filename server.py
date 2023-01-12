@@ -77,7 +77,7 @@ class Dekstop(QMainWindow):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
         self.label.resize(self.width(), self.height())
         x, y = map(int, pyautogui.size())  # размеры экрана
-        self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования
+        self.setGeometry(QRect(x // 4.5, y // 4.5, x // 1.5, y // 1.5))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
         self.start = Thread(target=self.ChangeImage, daemon=True)
