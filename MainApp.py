@@ -1,1 +1,1 @@
-print(1.5+1.5)
+from client import DekstopApp

@@ -9,6 +9,8 @@ import sys
 from PyQt5.QtWidgets import (QWidget, QPushButton,
     QHBoxLayout, QVBoxLayout, QApplication)
 
+import os
+
 
 class Example(QWidget):
 
