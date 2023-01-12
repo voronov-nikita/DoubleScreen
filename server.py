@@ -75,13 +75,13 @@ class Dekstop(QMainWindow):
 
     def initUI(self):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
-        self.label.resize(self.width(), self.height())
+        self.label.resize(self.width(), self.height())  #задаем размеры Label
         x, y = map(int, pyautogui.size())  # размеры экрана
         self.setGeometry(QRect(x // 4.5, y // 4.5, x // 1.5, y // 1.5))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
         self.start = Thread(target=self.ChangeImage, daemon=True)
-        self.setWindowTitle(str(addr))
+        self.setWindowTitle(str(addr)) # имя окна
         self.start.start()
 
     def mouse_control(self):
@@ -106,9 +106,9 @@ class Dekstop(QMainWindow):
 
 if __name__ == '__main__':
     while True:
-        sock.listen()
+        sock.listen()   # слушвем сервер
         conn, addr = sock.accept()
         app = QApplication(sys.argv)
         ex = Dekstop(conn)
-        ex.show()
+        ex.show()   # показываем (транслируем) на экран
         sys.exit(app.exec())

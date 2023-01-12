@@ -37,11 +37,10 @@ class DekstopApp(QMainWindow):
                     # <------------------Считывается и обрабатывается информация------------------>
                     img = ImageGrab.grab()  # считываем данные экрана
                     img_bytes = io.BytesIO()
-                    img.save(img_bytes, format='JPEG', optimize=True, progressive=True)  # типо НЕ сжимаем изображение
+                    img.save(img_bytes, format='JPEG', optimize=True, progressive=True)  # типо сжимаем изображение
 
                     # <------------------Отправка на Сервер------------------>
                     sock.send(img_bytes.getvalue())  # отправляем скриншот
-                    # sock.send(bytes(" "))
 
                     # <------------------Принимаем с Сервера------------------>
                     # k = 0
@@ -81,12 +80,12 @@ class DekstopApp(QMainWindow):
 
     def init_UI_Interact(self):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого окна приветствия
-        self.label.resize(self.width(), self.height())
+        self.label.resize(self.width(), self.height())  # задем размеры для Label
         x, y = map(int, pyautogui.size())  # размеры экрана
 
         self.setGeometry(QRect(x // 3, y // 3, 500, 100))  # окно-подключение
         self.setFixedSize(self.width(), self.height())
-        self.setWindowTitle("CLIENT")
+        self.setWindowTitle("CLIENT")   # имя окна
         self.start = Thread(target=self.ChangeImage, daemon=True)
 
         self.btn = QPushButton(self)
@@ -96,18 +95,18 @@ class DekstopApp(QMainWindow):
         self.btn.setText("Connected")  # текст кнопки
 
         self.ip = QLineEdit(self)  # IP-info
-        self.ip.move(5, 5)
-        self.ip.resize(490, 30)
+        self.ip.move(5, 5) # положение линии ip
+        self.ip.resize(490, 30) # размеры линии ip
         self.ip.setPlaceholderText("IP-adress")
 
         self.port = QLineEdit(self)  # PORT- info
-        self.port.move(5, 30)
-        self.port.resize(490, 30)
+        self.port.move(5, 30)   # положение линии port
+        self.port.resize(490, 30)   # размеры линии port
         self.port.setPlaceholderText("PORT-connect")
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = DekstopApp()
-    ex.show()
+    ex.show()   # показываем (транслируем) на экран
     sys.exit(app.exec())
