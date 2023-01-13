@@ -88,7 +88,7 @@ class DekstopApp(QMainWindow):
         self.setWindowTitle("CLIENT")   # имя окна
         self.start = Thread(target=self.ChangeImage, daemon=True)
 
-        self.btn = QPushButton(self)
+        self.btn = QPushButton(self)    #кнопка 
         self.btn.move(5, 55)
         self.btn.resize(490, 50)
         self.btn.clicked.connect(self.StartThread)
