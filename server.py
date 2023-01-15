@@ -12,7 +12,7 @@ import pyautogui  # много назначений
 from threading import Thread  # потоки
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout, QVBoxLayout
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
@@ -25,25 +25,23 @@ print(f"PORT-connected: {PORT}")
 sock = socket.socket()  # создаем сокет
 sock.bind((IP, PORT))  # к серверу
 
-grid = QGridLayout()
-
 
 class ClientTheard(threading.Thread):
-    def __init__(self, addr, conn):
+    def __init__(self, conn, grid):
         self.conn = conn
         self.grid = grid
+        self.ex = Dekstop(self.conn, self.grid)
         threading.Thread.__init__(self)
         print("Подключился:", addr)
 
     def run(self):
-        ex = Dekstop(self.conn)
         for colls in range(threading.active_count()):
             for rows in range(threading.active_count()):
-                self.grid.addWidget(ex.label, colls, rows)
+                self.grid.addWidget(self.ex.label, colls, rows)
 
 
 class Dekstop(QMainWindow):
-    def __init__(self, conn):
+    def __init__(self, conn, grid):
         super().__init__()
         self.pixmap = QPixmap()
         self.label = QLabel(self)
@@ -51,11 +49,6 @@ class Dekstop(QMainWindow):
         self.conn = conn
         self.initUI()
         self.mouse_x, self.mouse_y = map(int, pyautogui.position())
-
-    def Grid_add(self):
-        for i in range(threading.active_count()):
-            for j in range(threading.active_count()):
-                self.grid.addWidget(self.label, i, j)
 
     def ChangeImage(self):
         try:
@@ -67,7 +60,6 @@ class Dekstop(QMainWindow):
                     self.label.setScaledContents(True)
                     self.label.resize(self.width(), self.height())
                     self.label.setPixmap(self.pixmap)
-                    self.grid.addWidget(self.label, 1, 0)
                 # self.mouse_control()
         except ConnectionResetError:
             QMessageBox.about(self, "   ERROR   ", "  Error    Client    ")
@@ -75,13 +67,13 @@ class Dekstop(QMainWindow):
 
     def initUI(self):
         self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
-        self.label.resize(self.width(), self.height())  #задаем размеры Label
+        self.label.resize(self.width(), self.height())  # задаем размеры Label
         x, y = map(int, pyautogui.size())  # размеры экрана
         self.setGeometry(QRect(x // 4.5, y // 4.5, x // 1.5, y // 1.5))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
         self.start = Thread(target=self.ChangeImage, daemon=True)
-        self.setWindowTitle(str(addr)) # имя окна
+        self.setWindowTitle(str(addr))  # имя окна
         self.start.start()
 
     def mouse_control(self):
@@ -105,10 +97,11 @@ class Dekstop(QMainWindow):
 
 
 if __name__ == '__main__':
+    grid = QGridLayout()
     while True:
-        sock.listen()   # слушвем сервер
+        sock.listen()  # слушвем сервер
         conn, addr = sock.accept()
         app = QApplication(sys.argv)
-        ex = Dekstop(conn)
-        ex.show()   # показываем (транслируем) на экран
+        ex = Dekstop(conn, grid)
+        ex.show()  # показываем (транслируем) на экран
         sys.exit(app.exec())
