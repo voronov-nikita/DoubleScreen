@@ -1,3 +1,4 @@
+# <<------------- Для тестирования запустите скрипт MainApp и пропишите "client" ---------->>
 # <<---------------------- отправляет рабочий стол --------------------->>
 # <<--------------------- принимает координаты мыши --------------------->>
 
@@ -85,28 +86,23 @@ class DekstopApp(QMainWindow):
 
         self.setGeometry(QRect(x // 3, y // 3, 500, 100))  # окно-подключение
         self.setFixedSize(self.width(), self.height())
-        self.setWindowTitle("CLIENT")   # имя окна
+        self.setWindowTitle("CLIENT")  # имя окна
         self.start = Thread(target=self.ChangeImage, daemon=True)
 
-        self.btn = QPushButton(self)    #кнопка
+        self.btn = QPushButton(self)  # кнопка
         self.btn.move(5, 55)
         self.btn.resize(490, 50)
         self.btn.clicked.connect(self.StartThread)
         self.btn.setText("Connected")  # текст кнопки
 
         self.ip = QLineEdit(self)  # IP-info
-        self.ip.move(5, 5) # положение линии ip
-        self.ip.resize(490, 30) # размеры линии ip
+        self.ip.move(5, 5)  # положение линии ip
+        self.ip.resize(490, 30)  # размеры линии ip
         self.ip.setPlaceholderText("IP-adress")
 
         self.port = QLineEdit(self)  # PORT- info
-        self.port.move(5, 30)   # положение линии port
-        self.port.resize(490, 30)   # размеры линии port
+        self.port.move(5, 30)  # положение линии port
+        self.port.resize(490, 30)  # размеры линии port
         self.port.setPlaceholderText("PORT-connect")
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = DekstopApp()
-    ex.show()   # показываем (транслируем) на экран
-    sys.exit(app.exec())

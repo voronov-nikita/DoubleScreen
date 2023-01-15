@@ -1,3 +1,4 @@
+# <<------------- Для тестирования запустите скрипт MainApp и пропишите "server" ---------->>
 # <<---------------------- принимает рабочий стол --------------------->>
 # <<---------------------- отправляет координаты мыши --------------------->>
 
@@ -27,7 +28,7 @@ sock.bind((IP, PORT))  # к серверу
 
 
 class ClientTheard(threading.Thread):
-    def __init__(self, conn, grid):
+    def __init__(self, addr, conn, grid):
         self.conn = conn
         self.grid = grid
         self.ex = Dekstop(self.conn, self.grid)
@@ -41,11 +42,12 @@ class ClientTheard(threading.Thread):
 
 
 class Dekstop(QMainWindow):
-    def __init__(self, conn, grid):
+    def __init__(self, addr, conn, grid):
         super().__init__()
         self.pixmap = QPixmap()
         self.label = QLabel(self)
         self.grid = grid
+        self.addr = addr
         self.conn = conn
         self.initUI()
         self.mouse_x, self.mouse_y = map(int, pyautogui.position())
@@ -73,7 +75,7 @@ class Dekstop(QMainWindow):
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
         self.start = Thread(target=self.ChangeImage, daemon=True)
-        self.setWindowTitle(str(addr))  # имя окна
+        self.setWindowTitle(str(self.addr))  # имя окна
         self.start.start()
 
     def mouse_control(self):
@@ -95,13 +97,3 @@ class Dekstop(QMainWindow):
             self.conn.send(" ".encode('utf-8'))  # для разделения координат x/y
             self.conn.send(str(mouse_y).encode('utf-8'))  # отправляем координаты мыши по Y
 
-
-if __name__ == '__main__':
-    grid = QGridLayout()
-    while True:
-        sock.listen()  # слушвем сервер
-        conn, addr = sock.accept()
-        app = QApplication(sys.argv)
-        ex = Dekstop(conn, grid)
-        ex.show()  # показываем (транслируем) на экран
-        sys.exit(app.exec())
