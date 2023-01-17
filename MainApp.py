@@ -4,33 +4,50 @@
 # На данный момент это единственный способ опробовать приложение
 
 
-def client_app():
-    import client
-    app = client.QApplication(client.sys.argv)
-    ex = client.DekstopApp()
-    ex.show()  # показываем (транслируем) на экран
-    client.sys.exit(app.exec())
+from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QRect
+
+import sys
+from pyautogui import size
 
 
-def server_app():
-    import server
-    grid = server.QGridLayout()
-    while True:
-        server.sock.listen()  # слушвем сервер
-        conn, addr = server.sock.accept()
-        app = server.QApplication(server.sys.argv)
-        ex = server.Dekstop(addr, conn, grid)
+class RunModuleCode():
+    def client_app(self):
+        import client
+        app = client.QApplication(client.sys.argv)
+        ex = client.DekstopApp()
         ex.show()  # показываем (транслируем) на экран
-        server.sys.exit(app.exec())
+        client.sys.exit(app.exec())
+
+    def server_app(self):
+        import server
+        grid = server.QGridLayout()
+        while True:
+            server.sock.listen()  # слушвем сервер
+            conn, addr = server.sock.accept()
+            app = server.QApplication(server.sys.argv)
+            ex = server.Dekstop(addr, conn, grid)
+            ex.show()  # показываем (транслируем) на экран
+            server.sys.exit(app.exec())
 
 
-while True:
-    n = input("Что открыть ?\n>>>")
-    if n == "client":
-        client_app()
-        break
-    elif n == "server":
-        server_app()
-        break
-    print("Такой команды нет!")
-print("Stop")
+class Desktop(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.title_name = "Name"
+        self.InitUI()
+
+    def InitUI(self):
+        self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
+        x, y = map(int, size())  # размеры экрана
+        self.setGeometry(QRect(x // 4, y // 4, x//2, x//4))  # окно-подключение
+        self.setFixedSize(self.width(), self.height())
+        self.setWindowTitle(self.title_name)  # имя окна
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    ex = Desktop()
+    ex.show()
+    sys.exit(app.exec())

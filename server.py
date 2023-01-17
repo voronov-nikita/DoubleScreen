@@ -4,15 +4,14 @@
 
 import socket
 import threading
-
-import mouse
+import sys
+#import mouse
 from PIL import Image  # изображение
 
 import pyautogui  # много назначений
 
 from threading import Thread  # потоки
 
-import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout, QVBoxLayout
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
@@ -31,7 +30,7 @@ class ClientTheard(threading.Thread):
     def __init__(self, addr, conn, grid):
         self.conn = conn
         self.grid = grid
-        self.ex = Dekstop(self.conn, self.grid)
+        self.ex = Dekstop(addr, self.conn, self.grid)
         threading.Thread.__init__(self)
         print("Подключился:", addr)
 
@@ -77,23 +76,4 @@ class Dekstop(QMainWindow):
         self.start = Thread(target=self.ChangeImage, daemon=True)
         self.setWindowTitle(str(self.addr))  # имя окна
         self.start.start()
-
-    def mouse_control(self):
-        mouse_x, mouse_y = map(int, pyautogui.position())  # считываем координа мыши
-        self.conn.send(str(mouse_x).encode('utf-8'))  # отправляем координаты мыши по X
-        self.conn.send(" ".encode('utf-8'))  # для разделения координат x/y
-        self.conn.send(str(mouse_y).encode('utf-8'))  # отправляем координаты мыши по Y
-
-        # <------------Нуждается в доработке------------>
-        if mouse.is_pressed(button="left"):
-            self.conn.send("LMouseClick".encode('utf-8'))
-            self.conn.send(" ".encode('utf-8'))
-        elif mouse.is_pressed(button="right"):
-            self.conn.send("RMouseClick".encode('utf-8'))
-            self.conn.send(" ".encode('utf-8'))
-        else:
-            mouse_x, mouse_y = map(int, pyautogui.position())  # считываем координа мыши
-            self.conn.send(str(mouse_x).encode('utf-8'))  # отправляем координаты мыши по X
-            self.conn.send(" ".encode('utf-8'))  # для разделения координат x/y
-            self.conn.send(str(mouse_y).encode('utf-8'))  # отправляем координаты мыши по Y
 

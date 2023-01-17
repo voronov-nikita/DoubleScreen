@@ -38,43 +38,10 @@ class DekstopApp(QMainWindow):
                     # <------------------Считывается и обрабатывается информация------------------>
                     img = ImageGrab.grab()  # считываем данные экрана
                     img_bytes = io.BytesIO()
-                    img.save(img_bytes, format='JPEG', optimize=True, progressive=True)  # типо сжимаем изображение
+                    img.save(img_bytes, format='JPEG',)  # типо сжимать изображение не получается
 
                     # <------------------Отправка на Сервер------------------>
                     sock.send(img_bytes.getvalue())  # отправляем скриншот
-
-                    # <------------------Принимаем с Сервера------------------>
-                    # k = 0
-                    # rmouseclk = False  # обнуляем проверку на клик правой кнопкой
-                    # lmouseclk = False  # обнуляем проверку на клик левой кнопкой
-                    # data = sock.recv(99999999)  # Принимаем данные с сервера
-                    # try:
-                    #     if data.decode('utf-8'):  # проверка можно ли декодировать
-                    #         # <-----------Проверить на получение нажатия----------->
-                    #         if "R" in ''.join(data.decode('utf-8')):  # проверка нажатия правой кнопки мыши
-                    #             rmouseclk = True
-                    #         if "L" in ''.join(data.decode('utf-8')):  # проверка нажатия левой кнопкой мыши
-                    #             lmouseclk = True
-                    #
-                    #         new_data = data.decode('utf-8').split()
-                    #         print(new_data)
-                    #         if k == 0:
-                    #             self.mouse_x = int(new_data[0])  # задаем значение для X
-                    #             k = 1
-                    #         else:
-                    #             self.mouse_y = int(new_data[-1])  # задаем значение для Y
-                    #             k = 0
-                    #             if rmouseclk:
-                    #                 pyautogui.mouseDown(button='left')   # нажать на левую кнопку
-                    #             if lmouseclk:
-                    #                 pyautogui.mouseDown(button='right')  # нажать на правую кнопку
-                    #
-                    #             pyautogui.moveTo(self.mouse_x,
-                    #                              self.mouse_y)  # для того, чтобы менять координаты мыши на то, что выдает клиент
-                    #
-                    #
-                    # except UnicodeDecodeError:
-                    #     print("Error decode")
 
         except ConnectionResetError:
             print("DISCONNECTED")
