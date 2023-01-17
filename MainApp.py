@@ -4,7 +4,7 @@
 # На данный момент это единственный способ опробовать приложение
 
 
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWizard, QWizardPage, QPushButton, QGridLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QRect
 
@@ -12,7 +12,32 @@ import sys
 from pyautogui import size
 
 
-class RunModuleCode():
+
+class Desktop(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.title_name = "Name"
+        self.InitUI()
+
+    def InitUI(self):
+        self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
+        x, y = map(int, size())  # размеры экрана
+        self.setGeometry(QRect(x // 4, y // 4, x // 2, x // 4))  # окно-подключение
+        self.setFixedSize(self.width(), self.height())
+        self.setWindowTitle(self.title_name)  # имя окна
+
+        self.btn = QPushButton(self)  # кнопка
+        self.btn.move(100, 75)
+        self.btn.resize(250, 250)
+        self.btn.clicked.connect(self.client_app)
+        self.btn.setText("Client")  # текст кнопки
+
+        self.btn = QPushButton(self)  # кнопка
+        self.btn.move(500, 75)
+        self.btn.resize(250, 250)
+        self.btn.clicked.connect(self.server_app)
+        self.btn.setText("Server")  # текст кнопки
+
     def client_app(self):
         import client
         app = client.QApplication(client.sys.argv)
@@ -30,20 +55,6 @@ class RunModuleCode():
             ex = server.Dekstop(addr, conn, grid)
             ex.show()  # показываем (транслируем) на экран
             server.sys.exit(app.exec())
-
-
-class Desktop(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.title_name = "Name"
-        self.InitUI()
-
-    def InitUI(self):
-        self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
-        x, y = map(int, size())  # размеры экрана
-        self.setGeometry(QRect(x // 4, y // 4, x//2, x//4))  # окно-подключение
-        self.setFixedSize(self.width(), self.height())
-        self.setWindowTitle(self.title_name)  # имя окна
 
 
 if __name__ == "__main__":
