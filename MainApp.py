@@ -12,7 +12,6 @@ import sys
 from pyautogui import size
 
 
-
 class Desktop(QMainWindow):
     def __init__(self):
         super().__init__()
