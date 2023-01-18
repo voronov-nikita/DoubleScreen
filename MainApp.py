@@ -4,7 +4,7 @@
 # На данный момент это единственный способ опробовать приложение
 
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWizard, QWizardPage, QPushButton, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QGridLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QRect
 
@@ -13,9 +13,10 @@ from pyautogui import size
 
 
 class Desktop(QMainWindow):
-    def __init__(self):
+    def __init__(self, app):
         super().__init__()
         self.title_name = "Name"
+        self.app = app
         self.InitUI()
 
     def InitUI(self):
@@ -39,10 +40,10 @@ class Desktop(QMainWindow):
 
     def client_app(self):
         import client
-        app = client.QApplication(client.sys.argv)
+        # app = client.QApplication(client.sys.argv)
         ex = client.DekstopApp()
         ex.show()  # показываем (транслируем) на экран
-        client.sys.exit(app.exec())
+        client.sys.exit(self.app.exec())
 
     def server_app(self):
         import server
@@ -50,14 +51,13 @@ class Desktop(QMainWindow):
         while True:
             server.sock.listen()  # слушвем сервер
             conn, addr = server.sock.accept()
-            app = server.QApplication(server.sys.argv)
             ex = server.Dekstop(addr, conn, grid)
             ex.show()  # показываем (транслируем) на экран
-            server.sys.exit(app.exec())
+            server.sys.exit(self.app.exec())
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    ex = Desktop()
+    main_app = QApplication(sys.argv)
+    ex = Desktop(main_app)
     ex.show()
-    sys.exit(app.exec())
+    sys.exit(main_app.exec())

@@ -14,7 +14,7 @@ import pyautogui
 from threading import Thread
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QWidget, QCheckBox
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
