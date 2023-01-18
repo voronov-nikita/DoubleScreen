@@ -4,7 +4,7 @@
 # На данный момент это единственный способ опробовать приложение
 
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog, QPushButton, QGridLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QRect
 

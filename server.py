@@ -12,7 +12,7 @@ import pyautogui  # много назначений
 
 from threading import Thread  # потоки
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout, QWidget, QDialog
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
@@ -40,7 +40,7 @@ class ClientTheard(threading.Thread):
                 self.grid.addWidget(self.ex.label, colls, rows)
 
 
-class Dekstop(QWidget):
+class Dekstop(QDialog):
     def __init__(self, addr, conn, grid):
         super().__init__()
         self.pixmap = QPixmap()
