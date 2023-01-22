@@ -3,9 +3,10 @@
 # <<---------------------- отправляет координаты мыши --------------------->>
 
 import socket
+import multiprocessing
 import threading
 import sys
-#import mouse
+# import mouse
 from PIL import Image  # изображение
 
 import pyautogui  # много назначений
@@ -24,6 +25,22 @@ print(f"IP-adress: {IP}")
 print(f"PORT-connected: {PORT}")
 sock = socket.socket()  # создаем сокет
 sock.bind((IP, PORT))  # к серверу
+
+
+# Что-то похожее на Threading
+class ClientProcess(multiprocessing.Process):
+    def __init__(self, addr, conn, grid):
+        super().__init__()
+        self.conn = conn
+        self.grid = grid
+        self.ex = Dekstop(addr, self.conn, self.grid)
+
+        print("Подключился:", addr)
+
+    def run(self):
+        for colls in range(threading.active_count()):
+            for rows in range(threading.active_count()):
+                self.grid.addWidget(self.ex.label, colls, rows)
 
 
 class ClientTheard(threading.Thread):
@@ -76,4 +93,3 @@ class Dekstop(QDialog):
         self.start = Thread(target=self.ChangeImage, daemon=True)
         self.setWindowTitle(str(self.addr))  # имя окна
         self.start.start()
-

@@ -11,7 +11,7 @@ import io
 
 import pyautogui
 
-from threading import Thread
+from multiprocessing import Process
 
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QWidget, QDialog
@@ -54,7 +54,7 @@ class DekstopApp(QDialog):
         self.setGeometry(QRect(x // 3, y // 3, 500, 100))  # окно-подключение
         self.setFixedSize(self.width(), self.height())
         self.setWindowTitle("CLIENT")  # имя окна
-        self.start = Thread(target=self.ChangeImage, daemon=True)
+        self.start = Process(target=self.ChangeImage)
 
         self.btn = QPushButton(self)  # кнопка
         self.btn.move(5, 55)

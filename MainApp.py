@@ -40,24 +40,26 @@ class Desktop(QMainWindow):
 
     def client_app(self):
         import client
-        # app = client.QApplication(client.sys.argv)
-        ex = client.DekstopApp()
-        ex.show()  # показываем (транслируем) на экран
-        client.sys.exit(self.app.exec())
+        while True:
+            # app = client.QApplication(client.sys.argv)
+            ex = client.DekstopApp()
+            ex.show()  # показываем (транслируем) на экран
+            client.sys.exit(self.app.exec())
 
     def server_app(self):
         import server
-        grid = server.QGridLayout()
         while True:
-            server.sock.listen()  # слушвем сервер
-            conn, addr = server.sock.accept()
-            ex = server.Dekstop(addr, conn, grid)
-            ex.show()  # показываем (транслируем) на экран
-            server.sys.exit(self.app.exec())
+            grid = server.QGridLayout()
+            while True:
+                server.sock.listen()  # слушвем сервер
+                conn, addr = server.sock.accept()
+                ex = server.Dekstop(addr, conn, grid)
+                ex.show()  # показываем (транслируем) на экран
+                server.sys.exit(self.app.exec())
 
 
 if __name__ == "__main__":
     main_app = QApplication(sys.argv)
     cls = Desktop(main_app)
     cls.show()
-    sys.exit(main_app.exec())
+
