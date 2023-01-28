@@ -3,7 +3,7 @@
 # <<---------------------- отправляет координаты мыши --------------------->>
 
 import socket
-import multiprocessing
+from multiprocessing import Value, Array, Process
 import threading
 import sys
 # import mouse
@@ -28,19 +28,13 @@ sock.bind((IP, PORT))  # к серверу
 
 
 # Что-то похожее на Threading
-class ClientProcess(multiprocessing.Process):
+class ClientProcess(Process):
     def __init__(self, addr, conn, grid):
         super().__init__()
-        self.conn = conn
-        self.grid = grid
-        self.ex = Dekstop(addr, self.conn, self.grid)
+        self.grid = Value("")
 
         print("Подключился:", addr)
 
-    def run(self):
-        for colls in range(threading.active_count()):
-            for rows in range(threading.active_count()):
-                self.grid.addWidget(self.ex.label, colls, rows)
 
 
 class ClientTheard(threading.Thread):
