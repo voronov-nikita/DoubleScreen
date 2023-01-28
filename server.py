@@ -40,7 +40,7 @@ class ClientTheard(threading.Thread):
     def __init__(self, addr, conn, grid):
         self.conn = conn
         self.grid = grid
-        self.ex = Dekstop(addr, self.conn, self.grid)
+        self.ex = For_server(addr, self.conn, self.grid)
         threading.Thread.__init__(self)
         print("Подключился:", addr)
 
@@ -50,7 +50,7 @@ class ClientTheard(threading.Thread):
                 self.grid.addWidget(self.ex.label, colls, rows)
 
 
-class Dekstop(QDialog):
+class For_server(QDialog):
     def __init__(self, addr, conn, grid):
         super().__init__()
         self.pixmap = QPixmap()

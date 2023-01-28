@@ -17,6 +17,12 @@ class Desktop(QMainWindow):
         super().__init__()
         self.title_name = "Observer"
         self.app = app
+
+        self.position_connect = 0
+        self.position_upload = 0
+        self.list_connect_image = ["image/new_upload.png", "image/dont_upload.png"]
+        self.list_upload_image = ["image/Конект.png", "image/Disconnect.png"]
+
         self.InitUI()
 
     def InitUI(self):
@@ -27,41 +33,51 @@ class Desktop(QMainWindow):
         self.setWindowTitle(self.title_name)  # имя окна
 
         self.btn1 = QPushButton(self)  # кнопка
-        self.btn1.move(100, 75)
-        self.btn1.resize(250, 250)
+        self.btn1.move(50, 50)
+        self.btn1.resize(300, 300)
         self.btn1.clicked.connect(self.client_app)
-        self.btn1.setIcon(QIcon("image/new_upload.png"))
-        self.btn1.setIconSize(QSize(250, 250))
+        self.btn1.setIcon(QIcon(self.list_connect_image[self.position_connect]))
+        self.btn1.setIconSize(QSize(300, 300))
 
         self.btn2 = QPushButton(self)  # кнопка
-        self.btn2.move(500, 75)
-        self.btn2.resize(250, 250)
+        self.btn2.move(450, 50)
+        self.btn2.resize(300, 300)
         self.btn2.clicked.connect(self.server_app)
-        self.btn2.setIcon(QIcon("image/Конект.png"))
-        self.btn2.setIconSize(QSize(250, 250))
+        self.btn2.setIcon(QIcon(self.list_upload_image[self.position_upload]))
+        self.btn2.setIconSize(QSize(300, 300))
+
+        self.btn_help = QPushButton(self)
+        self.btn_help.move(x // 4, y // 4)
+        self.btn_help.resize(30, 30)
+        # self.btn2.clicked.connect(self.server_app)
+        self.btn_help.setIcon(QIcon("image/help.png"))
+        self.btn_help.setIconSize(QSize(30, 30))
 
     def client_app(self):
         import client
         # while True:
-            # app = client.QApplication(client.sys.argv)
-        self.btn1.setIcon(QIcon("image/dont_upload.png"))
+        # app = client.QApplication(client.sys.argv)
+        self.position_connect -= 1
+        self.btn1.setIcon(QIcon(self.list_connect_image[self.position_connect]))
         ex = client.DekstopApp()
         ex.show()  # показываем (транслируем) на экран
         # client.sys.exit(self.app.exec())
 
     def server_app(self):
+        self.position_upload -= 1
+        self.btn2.setIcon(QIcon(self.list_upload_image[self.position_upload]))
         import server
         grid = server.QGridLayout()
-        while True:
-            server.sock.listen()  # слушвем сервер
-            conn, addr = server.sock.accept()
-            ex = server.Dekstop(addr, conn, grid)
-            ex.show()  # показываем (транслируем) на экран
-            server.sys.exit(self.app.exec())
+        server.sock.listen()  # слушвем сервер
+        conn, addr = server.sock.accept()
+        ex = server.For_server(addr, conn, grid)
+        # server.sys.exit(self.app.exec())
 
 
 if __name__ == "__main__":
     main_app = QApplication(sys.argv)
     cls = Desktop(main_app)
+    cls.setObjectName("MainWindow")
+    cls.setStyleSheet("#MainWindow{background-color:green}")
     cls.show()
     sys.exit(main_app.exec())
