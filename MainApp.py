@@ -15,7 +15,7 @@ from pyautogui import size
 class Desktop(QMainWindow):
     def __init__(self, app):
         super().__init__()
-        self.title_name = "Name"
+        self.title_name = "Observer"
         self.app = app
         self.InitUI()
 
@@ -42,22 +42,22 @@ class Desktop(QMainWindow):
 
     def client_app(self):
         import client
-        while True:
+        # while True:
             # app = client.QApplication(client.sys.argv)
-            ex = client.DekstopApp()
-            ex.show()  # показываем (транслируем) на экран
-            client.sys.exit(self.app.exec())
+        self.btn1.setIcon(QIcon("image/dont_upload.png"))
+        ex = client.DekstopApp()
+        ex.show()  # показываем (транслируем) на экран
+        # client.sys.exit(self.app.exec())
 
     def server_app(self):
         import server
+        grid = server.QGridLayout()
         while True:
-            grid = server.QGridLayout()
-            while True:
-                server.sock.listen()  # слушвем сервер
-                conn, addr = server.sock.accept()
-                ex = server.Dekstop(addr, conn, grid)
-                ex.show()  # показываем (транслируем) на экран
-                server.sys.exit(self.app.exec())
+            server.sock.listen()  # слушвем сервер
+            conn, addr = server.sock.accept()
+            ex = server.Dekstop(addr, conn, grid)
+            ex.show()  # показываем (транслируем) на экран
+            server.sys.exit(self.app.exec())
 
 
 if __name__ == "__main__":
