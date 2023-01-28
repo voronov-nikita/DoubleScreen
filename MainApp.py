@@ -20,7 +20,7 @@ class Desktop(QMainWindow):
         self.InitUI()
 
     def InitUI(self):
-        self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
+        self.setWindowIcon(QIcon('image/logo-start.png'))  # лого основного окна
         x, y = map(int, size())  # размеры экрана
         self.setGeometry(QRect(x // 4, y // 4, x // 2, x // 4))  # окно-подключение
         self.setFixedSize(self.width(), self.height())
@@ -63,4 +63,3 @@ if __name__ == "__main__":
     cls = Desktop(main_app)
     cls.show()
     sys.exit(main_app.exec())
-

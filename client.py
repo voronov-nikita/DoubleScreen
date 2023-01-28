@@ -38,7 +38,7 @@ class DekstopApp(QDialog):
                     # <------------------Считывается и обрабатывается информация------------------>
                     img = ImageGrab.grab()  # считываем данные экрана
                     img_bytes = io.BytesIO()
-                    img.save(img_bytes, format='PNG',)  # типо сжимать изображение не получается
+                    img.save(img_bytes, format='PNG', )  # типо сжимать изображение не получается
 
                     # <------------------Отправка на Сервер------------------>
                     sock.send(img_bytes.getvalue())  # отправляем скриншот
@@ -47,7 +47,7 @@ class DekstopApp(QDialog):
             print("DISCONNECTED")
 
     def init_UI_Interact(self):
-        self.setWindowIcon(QIcon('logo-start.png'))  # лого окна приветствия
+        self.setWindowIcon(QIcon('image/logo-start.png'))  # лого окна приветствия
         self.label.resize(self.width(), self.height())  # задем размеры для Label
         x, y = map(int, pyautogui.size())  # размеры экрана
 
@@ -71,5 +71,3 @@ class DekstopApp(QDialog):
         self.port.move(5, 30)  # положение линии port
         self.port.resize(490, 30)  # размеры линии port
         self.port.setPlaceholderText("PORT-connect")
-
-

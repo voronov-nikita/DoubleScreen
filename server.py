@@ -77,7 +77,7 @@ class Dekstop(QDialog):
             self.conn.close()
 
     def initUI(self):
-        self.setWindowIcon(QIcon('logo-start.png'))  # лого основного окна
+        self.setWindowIcon(QIcon('image/logo-start.png'))  # лого основного окна
         self.label.resize(self.width(), self.height())  # задаем размеры Label
         x, y = map(int, pyautogui.size())  # размеры экрана
         self.setGeometry(QRect(x // 4.5, y // 4.5, x // 1.5, y // 1.5))  # окно проецирования
