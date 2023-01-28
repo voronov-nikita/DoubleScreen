@@ -31,10 +31,9 @@ sock.bind((IP, PORT))  # к серверу
 class ClientProcess(Process):
     def __init__(self, addr, conn, grid):
         super().__init__()
-        self.grid = Value("")
+        self.grid = Value("d", QGridLayout())
 
         print("Подключился:", addr)
-
 
 
 class ClientTheard(threading.Thread):
@@ -84,6 +83,6 @@ class Dekstop(QDialog):
         self.setGeometry(QRect(x // 4.5, y // 4.5, x // 1.5, y // 1.5))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
-        self.start = Thread(target=self.ChangeImage, daemon=True)
+        self.start = Thread(target=self.ChangeImage, args=(self.grid), daemon=True)
         self.setWindowTitle(str(self.addr))  # имя окна
         self.start.start()

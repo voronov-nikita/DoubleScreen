@@ -62,4 +62,5 @@ if __name__ == "__main__":
     main_app = QApplication(sys.argv)
     cls = Desktop(main_app)
     cls.show()
+    sys.exit(main_app.exec())
 
