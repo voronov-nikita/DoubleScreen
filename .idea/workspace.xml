@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/3x/3x/Disconnect.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/3x/3x/dont_upload.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/3x/3x/new_upload.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/3x/Конект.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/MainApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logo-start.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/3x/Disconnect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/3x/dont_upload.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/3x/new_upload.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

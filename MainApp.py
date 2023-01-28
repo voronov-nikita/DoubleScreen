@@ -6,7 +6,7 @@
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QGridLayout
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import QRect, QSize
 
 import sys
 from pyautogui import size
@@ -26,17 +26,19 @@ class Desktop(QMainWindow):
         self.setFixedSize(self.width(), self.height())
         self.setWindowTitle(self.title_name)  # имя окна
 
-        self.btn = QPushButton(self)  # кнопка
-        self.btn.move(100, 75)
-        self.btn.resize(250, 250)
-        self.btn.clicked.connect(self.client_app)
-        self.btn.setText("Client")  # текст кнопки
+        self.btn1 = QPushButton(self)  # кнопка
+        self.btn1.move(100, 75)
+        self.btn1.resize(250, 250)
+        self.btn1.clicked.connect(self.client_app)
+        self.btn1.setIcon(QIcon("image/new_upload.png"))
+        self.btn1.setIconSize(QSize(250, 250))
 
-        self.btn = QPushButton(self)  # кнопка
-        self.btn.move(500, 75)
-        self.btn.resize(250, 250)
-        self.btn.clicked.connect(self.server_app)
-        self.btn.setText("Server")  # текст кнопки
+        self.btn2 = QPushButton(self)  # кнопка
+        self.btn2.move(500, 75)
+        self.btn2.resize(250, 250)
+        self.btn2.clicked.connect(self.server_app)
+        self.btn2.setIcon(QIcon("image/Конект.png"))
+        self.btn2.setIconSize(QSize(250, 250))
 
     def client_app(self):
         import client
