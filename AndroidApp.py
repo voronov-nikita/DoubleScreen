@@ -15,19 +15,30 @@ class MainScreen(Screen):
     def __init__(self):
         super().__init__()
         self.name = "Main"
+
+        self.text_ip_input = TextInput()
+        self.text_port_input = TextInput()
+
         self.Init()
 
     def Init(self):
         bx = BoxLayout(orientation="vertical")
         btn = Button(text="Connect", )
         btn.bind(on_press=self.the_next_screen)
+        bx.add_widget(self.text_ip_input)
+        bx.add_widget(self.text_port_input)
         bx.add_widget(btn)
         self.add_widget(bx)
 
     def the_next_screen(self, *args):
         self.manager.transition.direction = 'right'
         self.manager.current = "Stream"
+        print(self.text_ip_input.text)
+        print(self.text_port_input.text)
         return 0
+
+    def on_text(self, instance, value):
+        self.on_text.text = print(self.on_text)
 
 
 class StreamScreen(Screen):

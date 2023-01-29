@@ -1,37 +1,44 @@
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.config import Config
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
-from kivy.uix.label import Label
-
-# Конфиг#
-
-Config.set('graphics', 'widht', '640');
-Config.set('graphics', 'height', '480');
-Config.set('graphics', 'resizeable', '0');
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.scatter import Scatter
+from kivy.uix.textinput import TextInput
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.boxlayout import BoxLayout
 
 
-# Оформление программы#
+# Config.set("graphics", "relizeble", "0")# ---\
+# Config.set("graphics", "width", "400")   #    \ высота и ширина экрана, изменять его потом нельзя
+# Config.set("graphics", "heigth", "600")#------/
 
 class MyApp(App):
     def build(self):
-        btn = BoxLayout()
-        textinput = TextInput
-        # btn.add_widget(Button(text="Btn", on_press=self.on_text()))
-        textinput.bind(text=self.on_text)
-        self.var = btn.add_widget(TextInput(size_hint=(.5, .25)))
-        return btn
+        fl = AnchorLayout()
+        bl = BoxLayout(orientation="vertical", size_hint=(.5, .5))
+        self.text_input = TextInput()
+        bl.add_widget(self.text_input)  # позиция
 
-    # Функции приложения#
+        bl.add_widget(Button(
+            text="Получить данные из TextInput",
+            font_size=13,  # font_size рaзмер шрифта
+            on_press=self.btn_press,  # on_press нажата
+            background_color=[1, 0, 0, 1],  # background_color цвет RGBA в %
+            background_normal="",  # background_normal  делает цвет ярче
+        ))  # позиция
 
-    def on_text(instance,value):
-        s=value
-        print(s)
+        fl.add_widget(bl)
+        # s = Scatter()
+        # s.add_widget(fl)
+        return fl
 
+    def on_text(self, instance, value):
+        self.on_text.text = print(self.on_text)
 
-# Запуск#
+    def btn_press(self, instance):
+        print(self.text_input.text)
+
 
 if __name__ == "__main__":
     MyApp().run()
