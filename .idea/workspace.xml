@@ -7,7 +7,6 @@
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AndroidApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/AndroidApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,8 +174,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.AndroidApp" />
-        <item itemvalue="Python.server_test" />
         <item itemvalue="Python.MainApp" />
+        <item itemvalue="Python.server_test" />
         <item itemvalue="Python.client (1)" />
         <item itemvalue="Python.client_test" />
       </list>
