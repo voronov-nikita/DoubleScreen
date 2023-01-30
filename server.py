@@ -88,7 +88,7 @@ class For_server(QDialog):
         self.start.start()
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     grid = QGridLayout()
     sock.listen()  # слушвем сервер
     conn, addr = sock.accept()

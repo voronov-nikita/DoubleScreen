@@ -68,7 +68,7 @@ class Desktop(QMainWindow):
         self.btn2.setIcon(QIcon(self.list_upload_image[self.position_upload]))
         import server
         grid = server.QGridLayout()
-        server.sock.listen()  # слушвем сервер
+        server.sock.listen()  # слушаем сервер
         conn, addr = server.sock.accept()
         ex = server.For_server(addr, conn, grid)
         # server.sys.exit(self.app.exec())

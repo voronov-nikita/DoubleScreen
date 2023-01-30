@@ -13,6 +13,8 @@ import pyautogui
 
 from multiprocessing import Process
 
+import threading
+
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QWidget, QDialog
 from PyQt5.QtGui import QPixmap, QIcon
@@ -45,6 +47,8 @@ class DekstopApp(QWidget):
 
         except ConnectionResetError:
             print("DISCONNECTED")
+        # except EOFError:
+        #     print("What")
 
     def init_UI_Interact(self):
         self.setWindowIcon(QIcon('image/logo-start.png'))  # лого окна приветствия
