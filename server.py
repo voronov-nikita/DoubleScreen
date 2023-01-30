@@ -80,7 +80,7 @@ class For_server(QDialog):
         self.setWindowIcon(QIcon('image/logo-start.png'))  # лого основного окна
         self.label.resize(self.width(), self.height())  # задаем размеры Label
         x, y = map(int, pyautogui.size())  # размеры экрана
-        self.setGeometry(QRect(x // 4.5, y // 4.5, x // 1.5, y // 1.5))  # окно проецирования
+        self.setGeometry(QRect(x // 4, y // 4, x // 1, y // 1))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
         self.start = Thread(target=self.ChangeImage, daemon=True)
