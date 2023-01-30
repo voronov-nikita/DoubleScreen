@@ -19,7 +19,7 @@ from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
 
-class DekstopApp(QDialog):
+class DekstopApp(QWidget):
     def __init__(self):
         super().__init__()
         self.pixmap = QPixmap()

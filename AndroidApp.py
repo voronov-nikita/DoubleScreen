@@ -54,7 +54,8 @@ class StreamScreen(Screen):
         global PORT
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # создаем сокет
         self.sock.bind((IP, PORT))  # к серверу
-        # self.conn.listen()
+        conn, addr = self.sock.accept()
+        self.sock.listen()
 
         self.name = "Stream"
         x, y = map(int, size())

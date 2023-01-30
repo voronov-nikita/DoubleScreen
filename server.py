@@ -86,3 +86,10 @@ class For_server(QDialog):
         self.start = Thread(target=self.ChangeImage, args=(self.grid), daemon=True)
         self.setWindowTitle(str(self.addr))  # имя окна
         self.start.start()
+
+
+if __name__=="__main__":
+    grid = QGridLayout()
+    sock.listen()  # слушвем сервер
+    conn, addr = sock.accept()
+    ex = For_server(addr, conn, grid)
