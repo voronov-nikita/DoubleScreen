@@ -10,10 +10,27 @@ from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen
 
+from threading import Thread
+
 from io import BytesIO
 
 IP = "192.168.0.16"
 PORT = 9998
+
+
+class ThredIMG(Thread):
+    def __init__(self):
+        super().__init__()
+        global IP
+        global PORT
+        Thread.__init__(self)
+        # print("Подключился:",)
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # создаем сокет
+        # conn, addr = self.sock.accept()
+        # self.sock.listen()
+
+    def run(self):
+        print("Connect")
 
 
 class MainScreen(Screen):
@@ -50,25 +67,28 @@ class MainScreen(Screen):
 class StreamScreen(Screen):
     def __init__(self):
         super().__init__()
-        global IP
-        global PORT
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # создаем сокет
-        self.sock.bind((IP, PORT))  # к серверу
-        conn, addr = self.sock.accept()
-        self.sock.listen()
 
         self.name = "Stream"
         x, y = map(int, size())
         self.fl = FloatLayout(size=(x, y))
-        self.lbl = Label(text="Text")
+        self.lbl = Label(text="NONE CONNECT")
         self.Init()
+
+    def ChangeImage(self):
+        self.sock.bind((IP, PORT))  # к серверу
+        while True:
+            data = self.conn.recv(999999)  # Принимаем данные с клиента
+            print(data)
+            # full = self.pixmap.loadFromData(data)
+            # if full:
+            #     pass
 
     def Init(self):
         # bxx = BoxLayout(orientation="vertical")
         # if IP is not None or PORT is not None:
-        data, addres = self.sock.recvfrom(1024)
-        if data:
-            print(data)
+        # data, addres = self.sock.recvfrom(1024)
+        # if data:
+        #     print(data)
 
         self.fl.add_widget(self.lbl)
         self.fl.add_widget(Button(text="exit",
@@ -83,6 +103,7 @@ class StreamScreen(Screen):
     def exit(self, instance):
         self.manager.transition.direction = 'left'
         self.manager.current = "Main"
+        self.start = Thread(target=self.ChangeImage, daemon=True)
         return 0
 
 
