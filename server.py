@@ -37,25 +37,25 @@ class ClientProcess(Process):
 
 
 class ClientTheard(threading.Thread):
-    def __init__(self, addr, conn, grid):
+    def __init__(self):
         self.conn = conn
-        self.grid = grid
-        self.ex = For_server(addr, self.conn, self.grid)
+        # self.grid = grid
+        self.ex = For_server(addr, self.conn)
         threading.Thread.__init__(self)
         print("Подключился:", addr)
 
     def run(self):
         for colls in range(threading.active_count()):
             for rows in range(threading.active_count()):
-                self.grid.addWidget(self.ex.label, colls, rows)
+                    self.ex.grid.addWidget(self.ex.label, colls, rows)
 
 
 class For_server(QDialog):
-    def __init__(self, addr, conn, grid):
+    def __init__(self, addr, conn):
         super().__init__()
         self.pixmap = QPixmap()
         self.label = QLabel(self)
-        self.grid = grid
+        self.grid = QGridLayout()
         self.addr = addr
         self.conn = conn
         self.initUI()
@@ -83,7 +83,7 @@ class For_server(QDialog):
         self.setGeometry(QRect(x // 4.5, y // 4.5, x // 1.5, y // 1.5))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
-        self.start = Thread(target=self.ChangeImage, args=(self.grid), daemon=True)
+        self.start = Thread(target=self.ChangeImage, daemon=True)
         self.setWindowTitle(str(self.addr))  # имя окна
         self.start.start()
 
@@ -94,5 +94,5 @@ if __name__ == "__main__":
         app = QApplication(sys.argv)
         sock.listen()  # слушвем сервер
         conn, addr = sock.accept()
-        ex = For_server(addr, conn, grid)
+        ex = For_server(addr, conn)
         sys.exit(app.exec())

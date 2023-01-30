@@ -67,10 +67,10 @@ class Desktop(QMainWindow):
         self.position_upload -= 1
         self.btn2.setIcon(QIcon(self.list_upload_image[self.position_upload]))
         import server
-        grid = server.QGridLayout()
+        # grid = server.QGridLayout()
         server.sock.listen()  # слушаем сервер
         conn, addr = server.sock.accept()
-        ex = server.For_server(addr, conn, grid)
+        ex = server.For_server(addr, conn)
         # server.sys.exit(self.app.exec())
 
 
