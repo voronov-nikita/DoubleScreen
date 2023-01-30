@@ -10,6 +10,8 @@ from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen
 
+from io import BytesIO
+
 IP = "192.168.0.16"
 PORT = 9998
 
@@ -50,7 +52,7 @@ class StreamScreen(Screen):
         super().__init__()
         global IP
         global PORT
-        self.sock = socket.socket()  # создаем сокет
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # создаем сокет
         self.sock.bind((IP, PORT))  # к серверу
         # self.conn.listen()
 
@@ -63,8 +65,7 @@ class StreamScreen(Screen):
     def Init(self):
         # bxx = BoxLayout(orientation="vertical")
         # if IP is not None or PORT is not None:
-        conn = self.sock.accept()
-        data = conn.recv(999999)  # Принимаем данные с клиента
+        data, addres = self.sock.recvfrom(1024)
         if data:
             print(data)
 
