@@ -21,8 +21,7 @@ PORT = 9998
 class ThredIMG(Thread):
     def __init__(self):
         super().__init__()
-        global IP
-        global PORT
+        global IP, PORT
         Thread.__init__(self)
         # print("Подключился:",)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # создаем сокет
@@ -52,12 +51,22 @@ class MainScreen(Screen):
         bx.add_widget(btn)
         self.add_widget(bx)
 
+    def ChangeImage(self):
+        self.sock.bind((IP, PORT))  # к серверу
+        while True:
+            data = self.conn.recv(999999)  # Принимаем данные с клиента
+            print(data)
+            # full = self.pixmap.loadFromData(data)
+            # if full:
+            #     pass
+
     def the_next_screen(self, *args):
         global IP, PORT
         self.manager.transition.direction = 'right'
         self.manager.current = "Stream"
         IP = self.text_ip_input.text
         PORT = self.text_port_input.text
+        self.start = Thread(target=self.ChangeImage, daemon=True)
         return 0
 
     def on_text(self, instance, value):
@@ -73,15 +82,6 @@ class StreamScreen(Screen):
         self.fl = FloatLayout(size=(x, y))
         self.lbl = Label(text="NONE CONNECT")
         self.Init()
-
-    def ChangeImage(self):
-        self.sock.bind((IP, PORT))  # к серверу
-        while True:
-            data = self.conn.recv(999999)  # Принимаем данные с клиента
-            print(data)
-            # full = self.pixmap.loadFromData(data)
-            # if full:
-            #     pass
 
     def Init(self):
         # bxx = BoxLayout(orientation="vertical")
@@ -103,7 +103,6 @@ class StreamScreen(Screen):
     def exit(self, instance):
         self.manager.transition.direction = 'left'
         self.manager.current = "Main"
-        self.start = Thread(target=self.ChangeImage, daemon=True)
         return 0
 
 
