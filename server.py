@@ -89,7 +89,10 @@ class For_server(QDialog):
 
 
 if __name__ == "__main__":
-    grid = QGridLayout()
-    sock.listen()  # слушвем сервер
-    conn, addr = sock.accept()
-    ex = For_server(addr, conn, grid)
+    while True:
+        grid = QGridLayout()
+        app = QApplication(sys.argv)
+        sock.listen()  # слушвем сервер
+        conn, addr = sock.accept()
+        ex = For_server(addr, conn, grid)
+        sys.exit(app.exec())
