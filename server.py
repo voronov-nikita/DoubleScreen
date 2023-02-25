@@ -50,7 +50,7 @@ class ClientTheard(threading.Thread):
                     self.ex.grid.addWidget(self.ex.label, colls, rows)
 
 
-class For_server(QDialog):
+class For_server(QMainWindow):
     def __init__(self, addr, conn):
         super().__init__()
         self.pixmap = QPixmap()
