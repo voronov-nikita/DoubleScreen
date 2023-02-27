@@ -46,8 +46,6 @@ class DekstopApp(QMainWindow):
 
         except ConnectionResetError:
             print("DISCONNECTED")
-        # except EOFError:
-        #     print("What")
 
     def init_UI_Interact(self):
         self.setWindowIcon(QIcon('image/logo-start.png'))  # лого окна приветствия
@@ -74,3 +72,10 @@ class DekstopApp(QMainWindow):
         self.port.move(5, 30)  # положение линии port
         self.port.resize(490, 30)  # размеры линии port
         self.port.setPlaceholderText("PORT-connect")
+
+
+if __name__=="__main__":
+    app = QApplication(sys.argv)
+    ex = DekstopApp()
+    ex.show()
+    sys.exit(app.exec())

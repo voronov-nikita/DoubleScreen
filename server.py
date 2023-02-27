@@ -25,6 +25,8 @@ print(f"IP-adress: {IP}")
 print(f"PORT-connected: {PORT}")
 sock = socket.socket()  # создаем сокет
 sock.bind((IP, PORT))  # к серверу
+sock.listen()
+conn, addr = sock.accept()
 
 
 # Что-то похожее на Threading
@@ -37,12 +39,11 @@ class ClientProcess(Process):
 
 
 class ClientTheard(threading.Thread):
-    def __init__(self):
+    def __init__(self, conn, addr):
         self.conn = conn
         # self.grid = grid
         self.ex = For_server(addr, self.conn)
         threading.Thread.__init__(self)
-        print("Подключился:", addr)
 
     def run(self):
         for colls in range(threading.active_count()):
@@ -64,7 +65,7 @@ class For_server(QMainWindow):
     def ChangeImage(self):
         try:
             while True:
-                data = self.conn.recv(999999)  # Принимаем данные с клиента
+                data = conn.recv(999999)
                 full = self.pixmap.loadFromData(data)
                 if full:
                     self.pixmap.loadFromData(data)
@@ -80,19 +81,16 @@ class For_server(QMainWindow):
         self.setWindowIcon(QIcon('image/logo-start.png'))  # лого основного окна
         self.label.resize(self.width(), self.height())  # задаем размеры Label
         x, y = map(int, pyautogui.size())  # размеры экрана
-        self.setGeometry(QRect(x // 4, y // 4, x // 1, y // 1))  # окно проецирования
+        self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.setLayout(self.grid)
         self.start = Thread(target=self.ChangeImage, daemon=True)
-        self.setWindowTitle(str(self.addr))  # имя окна
+        self.setWindowTitle(str(addr))  # имя окна
         self.start.start()
 
 
 if __name__ == "__main__":
-    while True:
-        grid = QGridLayout()
-        app = QApplication(sys.argv)
-        sock.listen()  # слушвем сервер
-        conn, addr = sock.accept()
-        ex = For_server(addr, conn)
-        sys.exit(app.exec())
+    app = QApplication(sys.argv)
+    ex = For_server(conn, addr)
+    ex.show()
+    sys.exit(app.exec())
