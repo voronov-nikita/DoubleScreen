@@ -56,12 +56,12 @@ class Desktop(QMainWindow):
     def client_app(self):
         import client
         # while True:
-        # app = client.QApplication(client.sys.argv)
+        app = QApplication(sys.argv)
         self.position_connect -= 1
         self.btn1.setIcon(QIcon(self.list_connect_image[self.position_connect]))
         ex = client.DekstopApp()
         ex.show()  # показываем (транслируем) на экран
-        # client.sys.exit(self.app.exec())
+        # sys.exit(app.exec())
 
     def server_app(self):
         self.position_upload -= 1
