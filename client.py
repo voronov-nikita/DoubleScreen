@@ -15,7 +15,8 @@ from multiprocessing import Process
 from threading import Thread
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QWidget, QDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QWidget, \
+    QDialog
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
@@ -74,7 +75,7 @@ class DekstopApp(QMainWindow):
         self.port.setPlaceholderText("PORT-connect")
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     ex = DekstopApp()
     ex.show()
