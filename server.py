@@ -3,10 +3,9 @@
 # <<---------------------- отправляет координаты мыши --------------------->>
 
 import socket
-from multiprocessing import Value, Array, Process
+
 import threading
 import sys
-# import mouse
 from PIL import Image  # изображение
 
 import pyautogui  # много назначений
@@ -29,15 +28,6 @@ sock.listen()
 conn, addr = sock.accept()
 
 
-# Что-то похожее на Threading
-class ClientProcess(Process):
-    def __init__(self, addr, conn, grid):
-        super().__init__()
-        self.grid = Value("d", QGridLayout())
-
-        print("Подключился:", addr)
-
-
 class ClientTheard(threading.Thread):
     def __init__(self, conn, addr):
         self.conn = conn
@@ -51,7 +41,7 @@ class ClientTheard(threading.Thread):
                     self.ex.grid.addWidget(self.ex.label, colls, rows)
 
 
-class For_server(QMainWindow):
+class Server(QMainWindow):
     def __init__(self, addr, conn):
         super().__init__()
         self.pixmap = QPixmap()
@@ -91,6 +81,6 @@ class For_server(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    ex = For_server(conn, addr)
+    ex = Server(conn, addr)
     ex.show()
     sys.exit(app.exec())

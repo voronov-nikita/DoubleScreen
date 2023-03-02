@@ -4,19 +4,15 @@
 
 import socket
 
-# import keyboard - пока не потребуется
-# import mouse
 from PIL import ImageGrab
 import io
 
 import pyautogui
 
-from multiprocessing import Process
 from threading import Thread
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QWidget, \
-    QDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
@@ -38,9 +34,9 @@ class DekstopApp(QMainWindow):
                 sock.connect((self.ip.text(), int(self.port.text())))
                 while True:
                     # <------------------Считывается и обрабатывается информация------------------>
-                    img = ImageGrab.grab()  # считываем данные экрана
+                    img = ImageGrab.grab()
                     img_bytes = io.BytesIO()
-                    img.save(img_bytes, format='PNG', )  # типо сжимать изображение не получается
+                    img.save(img_bytes, format='PNG')
 
                     # <------------------Отправка на Сервер------------------>
                     sock.send(img_bytes.getvalue())  # отправляем скриншот
