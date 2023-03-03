@@ -62,9 +62,7 @@ class Server(QMainWindow):
                     self.label.setScaledContents(True)
                     self.label.resize(self.width(), self.height())
                     self.label.setPixmap(self.pixmap)
-                # self.mouse_control()
         except ConnectionResetError:
-            QMessageBox.about(self, "   ERROR   ", "  Error    Client    ")
             self.conn.close()
 
     def initUI(self):
