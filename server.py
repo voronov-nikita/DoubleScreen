@@ -31,8 +31,7 @@ conn, addr = sock.accept()
 class ClientTheard(threading.Thread):
     def __init__(self, conn, addr):
         self.conn = conn
-        # self.grid = grid
-        self.ex = For_server(addr, self.conn)
+        self.ex = Server(addr, self.conn)
         threading.Thread.__init__(self)
 
     def run(self):
@@ -77,8 +76,7 @@ class Server(QMainWindow):
         self.start.start()
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    ex = Server(conn, addr)
-    ex.show()
-    sys.exit(app.exec())
+app = QApplication(sys.argv)
+ex = Server(conn, addr)
+ex.show()
+sys.exit(app.exec())
