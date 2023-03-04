@@ -37,7 +37,7 @@ class ClientTheard(threading.Thread):
     def run(self):
         for colls in range(threading.active_count()):
             for rows in range(threading.active_count()):
-                    self.ex.grid.addWidget(self.ex.label, colls, rows)
+                self.ex.grid.addWidget(self.ex.label, colls, rows)
 
 
 class Server(QMainWindow):
@@ -55,12 +55,18 @@ class Server(QMainWindow):
         try:
             while True:
                 data = conn.recv(999999)
-                full = self.pixmap.loadFromData(data)
-                if full:
-                    self.pixmap.loadFromData(data)
-                    self.label.setScaledContents(True)
-                    self.label.resize(self.width(), self.height())
-                    self.label.setPixmap(self.pixmap)
+                try:
+                    message = data.decode()
+                    if message[0] == "Z":
+                        new = Thread(target=self.message_app)
+                        new.start()
+                except:
+                    full = self.pixmap.loadFromData(data)
+                    if full:
+                        self.pixmap.loadFromData(data)
+                        self.label.setScaledContents(True)
+                        self.label.resize(self.width(), self.height())
+                        self.label.setPixmap(self.pixmap)
         except ConnectionResetError:
             self.conn.close()
 
@@ -75,8 +81,15 @@ class Server(QMainWindow):
         self.setWindowTitle(str(addr))  # имя окна
         self.start.start()
 
+    def message_app(self):
+        warn = QMessageBox()
+        warn.setWindowTitle("WARNING")
+        warn.setIcon(QMessageBox.Warning)
+        warn.setText("Попытка открыть приложение")
+        warn.exec_()
+
 
 app = QApplication(sys.argv)
 ex = Server(conn, addr)
 ex.show()
-sys.exit(app.exec())
+sys.exit(app.exec_())

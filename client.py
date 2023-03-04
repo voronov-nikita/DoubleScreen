@@ -41,8 +41,8 @@ class DekstopApp(QMainWindow):
     def ChangeImage(self):
         try:
             if len(self.ip.text()) != 0 and len(self.port.text()):
-                sock = socket.socket()
-                sock.connect((self.ip.text(), int(self.port.text())))
+                self.sock = socket.socket()
+                self.sock.connect((self.ip.text(), int(self.port.text())))
                 while True:
                     # <------------------Считывается и обрабатывается информация------------------>
                     img = ImageGrab.grab()
@@ -52,18 +52,19 @@ class DekstopApp(QMainWindow):
                              progressive=True)
 
                     # <------------------Отправка на Сервер------------------>
-                    sock.send(img_bytes.getvalue())  # отправляем скриншот
+                    self.sock.send(img_bytes.getvalue())  # отправляем скриншот
 
         except ConnectionResetError:
             self.close()
             print(f"// DISCONNECT //")
 
-    def OpenSettingsWindow(self):
+    def ThreadProcessInfo(self):
         while True:
             # отслеживание активных процессов и невозможность открыть их
             for procces in process_iter():
                 if procces.name() in list_prohibited_programm:
                     print("KILL:", procces.name())
+                    self.sock.send(str("Z"+procces.name()).encode())
                     procces.kill()
                     break
             time.sleep(2)
@@ -77,7 +78,7 @@ class DekstopApp(QMainWindow):
         self.setFixedSize(self.width(), self.height())
         self.setWindowTitle("CLIENT")  # имя окна
         self.start_change_image = Thread(target=self.ChangeImage)
-        self.start_process_find = Thread(target=self.OpenSettingsWindow)
+        self.start_process_find = Thread(target=self.ThreadProcessInfo)
 
         self.btn = QPushButton(self)  # кнопка
         self.btn.move(5, 55)
