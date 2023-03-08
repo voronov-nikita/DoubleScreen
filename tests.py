@@ -1,29 +1,33 @@
 import sys
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QLabel, QGridLayout, QWidget
-from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        QMainWindow.__init__(self)
+        super().__init__()
 
-        self.setMinimumSize(QSize(300, 200))
-        self.setWindowTitle("PyQt messagebox example - pythonprogramminglanguage.com")
+        self.setWindowTitle('Main Window')
+        # self.setGeometry(100, 100, 300, 200)
 
-        pybutton = QPushButton('Show messagebox', self)
-        pybutton.clicked.connect(self.clickMethod)
-        pybutton.resize(200, 64)
-        pybutton.move(50, 50)
+        button = QPushButton('Open New Window', self)
+        button.setGeometry(100, 50, 100, 50)
+        button.clicked.connect(self.open_new_window)
 
-    def clickMethod(self):
-        QMessageBox.about(self, "Title", "Message")
+    def open_new_window(self):
+        self.new_window = NewWindow()
+        self.new_window.show()
 
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    mainWin = MainWindow()
-    mainWin.show()
+class NewWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle('New Window')
+        self.setGeometry(200, 200, 300, 200)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
     sys.exit(app.exec_())

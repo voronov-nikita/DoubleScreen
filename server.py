@@ -58,8 +58,7 @@ class Server(QMainWindow):
                 try:
                     message = data.decode()
                     if message[0] == "Z":
-                        new = Thread(target=self.message_app)
-                        new.start()
+                        self.message_app(message[1:])
                 except:
                     full = self.pixmap.loadFromData(data)
                     if full:
@@ -81,12 +80,13 @@ class Server(QMainWindow):
         self.setWindowTitle(str(addr))  # имя окна
         self.start.start()
 
-    def message_app(self):
-        warn = QMessageBox()
-        warn.setWindowTitle("WARNING")
-        warn.setIcon(QMessageBox.Warning)
-        warn.setText("Попытка открыть приложение")
-        warn.exec_()
+    def message_app(self, get_message):
+        message_box = QMessageBox(self)
+        message_box.setWindowTitle('Warning')
+        message_box.setText(f'Было закрыто: {get_message}')
+        message_box.setIcon(QMessageBox.Information)
+        message_box.setStandardButtons(QMessageBox.Ok)
+        message_box.exec_()
 
 
 app = QApplication(sys.argv)
