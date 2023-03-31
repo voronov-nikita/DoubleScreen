@@ -1,11 +1,3 @@
-# Приложение клиента для трансляции изображения
-# Новео окно с двумя строками ввода и одной кнопкой
-# НЕ ЗАКРЫВАТЬ! ПРОГРАММА СЛОМАЕТСЯ!
-# Реализовать:
-#
-#
-#
-
 import socket
 
 from PIL import ImageGrab
@@ -24,7 +16,29 @@ from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
 # глоабльные переменные
-list_prohibited_programm = ["Telegram.exe"]
+list_prohibited_programm = []
+
+
+class ViewList(QDialog):
+    def __init__(self):
+        super(ViewList, self).__init__()
+
+        the_list = ('\n'.join(list_prohibited_programm), "Пусто")[len(list_prohibited_programm)==0]
+
+        self.label = QLabel(str(the_list), self)
+
+        button = QPushButton("Закрыть", self)
+        button.clicked.connect(self.close)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(button)
+
+        # Устанавливаем макет для главного окна
+        self.setLayout(layout)
+        x, y = size()
+        self.setGeometry(x // 2, y // 2, 200, 100)
+        self.setWindowTitle("Добавить запрещенные программы")
 
 
 class AddInList(QDialog):
@@ -35,22 +49,31 @@ class AddInList(QDialog):
 
         self.line = QLineEdit(self)
 
-        button = QPushButton("Сохранить", self)
-        button.clicked.connect(self.save_data)
+        button_save = QPushButton("Сохранить", self)
+        button_save.clicked.connect(self.save_data)
+
+        button_watch = QPushButton("Просмотреть список", self)
+        button_watch.clicked.connect(self.watch_list_app)
 
         layout = QVBoxLayout()
         layout.addWidget(self.label)
         layout.addWidget(self.line)
-        layout.addWidget(button)
+        layout.addWidget(button_watch)
+        layout.addWidget(button_save)
 
         # Устанавливаем макет для главного окна
         self.setLayout(layout)
+        self.setWindowTitle("Добавить запрещенные программы")
 
     def save_data(self):
         text = self.line.text()
         if text not in list_prohibited_programm and text.split() != '':
             list_prohibited_programm.append(text)
-        print(list_prohibited_programm)
+        self.line.clear()
+
+    def watch_list_app(self):
+        view_list = ViewList()
+        view_list.exec_()
 
 
 class DekstopApp(QMainWindow):
@@ -58,6 +81,7 @@ class DekstopApp(QMainWindow):
         super().__init__()
         self.pixmap = QPixmap()
         self.label = QLabel(self)
+        self.add_new_habita_aplication()
         self.init_UI_Interact()
 
     def StartThread(self):
@@ -90,7 +114,7 @@ class DekstopApp(QMainWindow):
             for procces in process_iter():
                 if procces.name() in list_prohibited_programm:
                     print("KILL:", procces.name())
-                    self.sock.send(str("Z"+procces.name()).encode())
+                    self.sock.send(str("Z" + procces.name()).encode())
                     procces.kill()
                     break
             time.sleep(2)
@@ -108,24 +132,19 @@ class DekstopApp(QMainWindow):
 
         self.btn = QPushButton(self)  # кнопка
         self.btn.move(5, 55)
-        self.btn.resize(470, 50)
+        self.btn.resize(490, 50)
         self.btn.clicked.connect(self.StartThread)
         self.btn.setText("Connected")  # текст кнопки
 
         self.ip = QLineEdit(self)  # IP-info
         self.ip.move(5, 5)  # положение линии ip
-        self.ip.resize(470, 30)  # размеры линии ip
+        self.ip.resize(490, 30)  # размеры линии ip
         self.ip.setPlaceholderText("IP-adress")
 
         self.port = QLineEdit(self)  # PORT- info
         self.port.move(5, 30)  # положение линии port
-        self.port.resize(470, 30)  # размеры линии port
+        self.port.resize(490, 30)  # размеры линии port
         self.port.setPlaceholderText("PORT-connect")
-
-        self.settings = QPushButton(self)
-        self.settings.move(470, 0)
-        self.settings.resize(30, 30)
-        self.btn.clicked.connect(self.add_new_habita_aplication)
 
     def add_new_habita_aplication(self):
         new_window = AddInList()

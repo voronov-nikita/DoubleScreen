@@ -1,18 +1,13 @@
-# <<------------- Для тестирования запустите скрипт MainApp и пропишите "server" ---------->>
-# <<---------------------- принимает рабочий стол --------------------->>
-# <<---------------------- отправляет координаты мыши --------------------->>
-
 import socket
 
 import threading
 import sys
-from PIL import Image  # изображение
 
 import pyautogui  # много назначений
 
 from threading import Thread  # потоки
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QGridLayout,QVBoxLayout, QDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QGridLayout, QVBoxLayout, QDialog
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
@@ -34,18 +29,14 @@ class ClientTheard(threading.Thread):
         self.ex = Server(addr, self.conn)
         threading.Thread.__init__(self)
 
-    def run(self):
-        for colls in range(threading.active_count()):
-            for rows in range(threading.active_count()):
-                self.ex.grid.addWidget(self.ex.label, colls, rows)
-
 
 class WarningWindow(QDialog):
     def __init__(self, get_message):
         super().__init__()
 
         self.setWindowTitle("Warning")
-        self.setGeometry(100, 100, 200, 200)
+        x, y = pyautogui.size()
+        self.setGeometry(x // 2, y // 2, 200, 100)
 
         label = QLabel(f"Внимание было закрыто {get_message}")
 
@@ -76,16 +67,13 @@ class Server(QMainWindow):
         self.mouse_x, self.mouse_y = map(int, pyautogui.position())
 
     def ChangeImage(self):
-        not_habitat_programs = True
         try:
-            while not_habitat_programs:
+            while True:
                 data = conn.recv(999999)
                 try:
                     message = data.decode()
                     if message[0] == "Z":
-                        print("KIll")
-                        # not_habitat_programs = False
-                        # self.message_app(message[1:])
+                        self.message_app(message[1:])
                 except:
                     full = self.pixmap.loadFromData(data)
                     if full:
@@ -109,6 +97,7 @@ class Server(QMainWindow):
 
     def message_app(self, get_message):
         message_box = WarningWindow(get_message)
+        sys.exit()
 
 
 app = QApplication(sys.argv)
