@@ -9,11 +9,21 @@ It is my indidual project! I am Voronov Nikita, 10th grade student.
 
 ### **CLIENT**
 
-![client]()
+![client](/image/client1.png)
 
+Рисунок 1 - окно для ввода названий запрещеных приложений.
+
+![client](/image/client2.png)
+
+Рисунок 2 - основное окно клиента, сюда вводятся IP-адрес и PORT <font color=#808080>По умолчанию 9999.</font> Данные получают от сервера.
 
 ### **SERVER**
 
-![server]()
+![server](/image/server1.png)
+
+Рисунок 3 - пример окна сервера, который транслирует изображение на другой ПК.
+
+
+###### 31.03.2023 - last commit.
 
 
