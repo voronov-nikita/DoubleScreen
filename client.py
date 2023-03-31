@@ -19,12 +19,38 @@ import time
 
 import sys
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QDialog, QVBoxLayout
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
 # глоабльные переменные
 list_prohibited_programm = ["Telegram.exe"]
+
+
+class AddInList(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.label = QLabel("Введите название приложение и его формат:", self)
+
+        self.line = QLineEdit(self)
+
+        button = QPushButton("Сохранить", self)
+        button.clicked.connect(self.save_data)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.line)
+        layout.addWidget(button)
+
+        # Устанавливаем макет для главного окна
+        self.setLayout(layout)
+
+    def save_data(self):
+        text = self.line.text()
+        if text not in list_prohibited_programm and text.split() != '':
+            list_prohibited_programm.append(text)
+        print(list_prohibited_programm)
 
 
 class DekstopApp(QMainWindow):
@@ -55,8 +81,8 @@ class DekstopApp(QMainWindow):
                     self.sock.send(img_bytes.getvalue())  # отправляем скриншот
 
         except ConnectionResetError:
-            self.close()
             print(f"// DISCONNECT //")
+            sys.exit()
 
     def ThreadProcessInfo(self):
         while True:
@@ -99,15 +125,12 @@ class DekstopApp(QMainWindow):
         self.settings = QPushButton(self)
         self.settings.move(470, 0)
         self.settings.resize(30, 30)
-        self.settings.setIcon(QIcon("/image/settings_icon.png"))
+        self.btn.clicked.connect(self.add_new_habita_aplication)
 
+    def add_new_habita_aplication(self):
+        new_window = AddInList()
+        new_window.exec_()
 
-# запись еще нужна, но уже устарела
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     ex = DekstopApp()
-#     ex.show()
-#     sys.exit(app.exec())
 
 # это более выгодное решение с точки зрения открытия из нового файла
 app = QApplication(sys.argv)

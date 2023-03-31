@@ -12,7 +12,7 @@ import pyautogui  # много назначений
 
 from threading import Thread  # потоки
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox, QGridLayout, QWidget, QDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QGridLayout,QVBoxLayout, QDialog
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect
 
@@ -40,6 +40,30 @@ class ClientTheard(threading.Thread):
                 self.ex.grid.addWidget(self.ex.label, colls, rows)
 
 
+class WarningWindow(QDialog):
+    def __init__(self, get_message):
+        super().__init__()
+
+        self.setWindowTitle("Warning")
+        self.setGeometry(100, 100, 200, 200)
+
+        label = QLabel(f"Внимание было закрыто {get_message}")
+
+        # Создаем кнопку
+        button = QPushButton("Закрыть")
+        button.clicked.connect(self.close)
+
+        # Создаем макет и добавляем метку и кнопку в макет
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        layout.addWidget(button)
+
+        # Устанавливаем макет для диалогового окна
+        self.setLayout(layout)
+
+        self.exec_()
+
+
 class Server(QMainWindow):
     def __init__(self, addr, conn):
         super().__init__()
@@ -52,13 +76,16 @@ class Server(QMainWindow):
         self.mouse_x, self.mouse_y = map(int, pyautogui.position())
 
     def ChangeImage(self):
+        not_habitat_programs = True
         try:
-            while True:
+            while not_habitat_programs:
                 data = conn.recv(999999)
                 try:
                     message = data.decode()
                     if message[0] == "Z":
-                        self.message_app(message[1:])
+                        print("KIll")
+                        # not_habitat_programs = False
+                        # self.message_app(message[1:])
                 except:
                     full = self.pixmap.loadFromData(data)
                     if full:
@@ -81,12 +108,7 @@ class Server(QMainWindow):
         self.start.start()
 
     def message_app(self, get_message):
-        message_box = QMessageBox(self)
-        message_box.setWindowTitle('Warning')
-        message_box.setText(f'Было закрыто: {get_message}')
-        message_box.setIcon(QMessageBox.Information)
-        message_box.setStandardButtons(QMessageBox.Ok)
-        message_box.exec_()
+        message_box = WarningWindow(get_message)
 
 
 app = QApplication(sys.argv)
