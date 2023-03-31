@@ -46,7 +46,7 @@
       <recent name="C:\Users\MSI\Documents\GitHub\individual-project" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.client (1)">
+  <component name="RunManager" selected="Python.tests">
     <configuration name="AndroidApp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="individual-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -196,8 +196,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.server" />
         <item itemvalue="Python.tests" />
+        <item itemvalue="Python.server" />
         <item itemvalue="Python.AndroidApp" />
         <item itemvalue="Python.MainApp" />
         <item itemvalue="Python.client_test" />
