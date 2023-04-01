@@ -85,7 +85,7 @@ class Server(QMainWindow):
             self.conn.close()
 
     def initUI(self):
-        self.setWindowIcon(QIcon('image/logo-start.png'))  # лого основного окна
+        self.setWindowIcon(QIcon('icologo.png'))  # лого основного окна
         self.label.resize(self.width(), self.height())  # задаем размеры Label
         x, y = map(int, pyautogui.size())  # размеры экрана
         self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования

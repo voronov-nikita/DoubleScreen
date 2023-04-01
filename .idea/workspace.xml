@@ -6,7 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/AndroidApp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/Disconnect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/dont_upload.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/help.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/logo-start.png" beforeDir="false" afterPath="$PROJECT_DIR$/icologo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/new_upload.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/settings_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/Конект.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,11 +50,13 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\MSI\Documents\GitHub\1) Проетк\individual-project" />
+      <recent name="C:\Users\MSI\Documents\GitHub\1) Проетк\individual-project\image" />
       <recent name="C:\Users\MSI\Documents\GitHub\1) Проетк\individual-project\ignore_but_necessary" />
       <recent name="C:\Users\MSI\Documents\GitHub\individual-project" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.client (1)">
+  <component name="RunManager" selected="Python.server">
     <configuration name="AndroidApp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="individual-project" />
       <option name="INTERPRETER_OPTIONS" value="" />

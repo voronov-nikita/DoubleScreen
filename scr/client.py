@@ -38,6 +38,7 @@ class ViewList(QDialog):
         self.setLayout(layout)
         x, y = size()
         self.setGeometry(x // 2, y // 2, 200, 100)
+        self.setWindowIcon(QIcon('icologo.png'))
         self.setWindowTitle("Добавить запрещенные программы")
 
 
@@ -63,6 +64,7 @@ class AddInList(QDialog):
 
         # Устанавливаем макет для главного окна
         self.setLayout(layout)
+        self.setWindowIcon(QIcon('icologo.png'))
         self.setWindowTitle("Добавить запрещенные программы")
 
     def save_data(self):
@@ -105,7 +107,7 @@ class DekstopApp(QMainWindow):
                     self.sock.send(img_bytes.getvalue())  # отправляем скриншот
 
         except ConnectionResetError:
-            print(f"// DISCONNECT //")
+            # print(f"// DISCONNECT //")
             sys.exit()
 
     def ThreadProcessInfo(self):
@@ -113,14 +115,14 @@ class DekstopApp(QMainWindow):
             # отслеживание активных процессов и невозможность открыть их
             for procces in process_iter():
                 if procces.name() in list_prohibited_programm:
-                    print("KILL:", procces.name())
+                    # print("KILL:", procces.name())
                     self.sock.send(str("Z" + procces.name()).encode())
                     procces.kill()
                     break
             time.sleep(2)
 
     def init_UI_Interact(self):
-        self.setWindowIcon(QIcon('image/logo-start.png'))  # лого окна приветствия
+        self.setWindowIcon(QIcon('icologo.png'))  # лого окна приветствия
         self.label.resize(self.width(), self.height())  # задем размеры для Label
         x, y = map(int, size())  # размеры экрана
 

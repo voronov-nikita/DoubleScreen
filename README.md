@@ -2,7 +2,7 @@
 ## Обьединение двух мониторов в один
 ### 10 класс ГБОУ Школы №1532
 
-![image](/image/logo-start.png)
+![image](/icologo.png)
 
 It is my indidual project! I am Voronov Nikita, 10th grade student.
 
