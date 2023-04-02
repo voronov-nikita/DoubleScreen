@@ -6,17 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/AndroidApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/Disconnect.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/dont_upload.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/help.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/logo-start.png" beforeDir="false" afterPath="$PROJECT_DIR$/icologo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/new_upload.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/settings_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/Конект.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +34,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/code" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
