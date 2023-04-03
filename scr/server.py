@@ -7,7 +7,7 @@ import pyautogui  # много назначений
 
 from threading import Thread  # потоки
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QGridLayout, QVBoxLayout, QDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QGridLayout, QVBoxLayout, QDialog, QWidget
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QRect, Qt
 
@@ -45,6 +45,7 @@ class WarningWindow(QDialog):
 
         self.exec_()
 
+
 class InfoWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -64,7 +65,7 @@ class InfoWindow(QMainWindow):
         self.label.move(5, 0)
         self.label.resize(x//2, y//9)
 
-        button = QPushButton("Готово", self)
+        button = QPushButton("Запустить", self)
         button.move(0, 90)
         button.resize(x//5, y//10)
         button.clicked.connect(self.start_programm)
@@ -74,7 +75,6 @@ class InfoWindow(QMainWindow):
         layout.addWidget(button)
 
     def start_programm(self):
-        self.label.setText("\t\t\tStart")
         sock = socket.socket()  # создаем сокет
         sock.bind((IP, PORT))  # к серверу
         sock.listen()
@@ -82,11 +82,11 @@ class InfoWindow(QMainWindow):
         conn, addr = sock.accept()
 
         ex = Server()
-        ex.exec_()
+        ex.show()
         self.close()
 
 
-class Server(QDialog):
+class Server(QWidget):
     def __init__(self):
         super().__init__()
         self.pixmap = QPixmap()
