@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scr/AndroidApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/scr/AndroidApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scr/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/scr/client.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +47,7 @@
       <recent name="C:\Users\MSI\Documents\GitHub\individual-project" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.client (2)">
+  <component name="RunManager" selected="Python.server (1)">
     <configuration name="client (1)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="individual-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -199,8 +197,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.client (2)" />
         <item itemvalue="Python.server (1)" />
+        <item itemvalue="Python.client (2)" />
         <item itemvalue="Python.tests (1)" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.tests" />
@@ -228,5 +226,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/scr/client.py</url>
+          <line>64</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
