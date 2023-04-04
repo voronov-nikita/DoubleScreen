@@ -51,7 +51,7 @@ class InfoWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Information")
-        self.setWindowIcon(QIcon('../icologo.png'))
+        self.setWindowIcon(QIcon('icologo.png'))
         self.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
         x, y = pyautogui.size()
         self.setGeometry(x // 2, y // 2, x//5, y//5)
@@ -114,7 +114,7 @@ class Server(QWidget):
             self.conn.close()
 
     def initUI(self):
-        self.setWindowIcon(QIcon('../icologo.png'))  # лого основного окна
+        self.setWindowIcon(QIcon('icologo.png'))  # лого основного окна
         self.label.resize(self.width(), self.height())  # задаем размеры Label
         x, y = map(int, pyautogui.size())  # размеры экрана
         self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования

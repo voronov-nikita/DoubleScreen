@@ -39,7 +39,7 @@ class ViewList(QDialog):
         self.setLayout(layout)
         x, y = size()
         self.setGeometry(x // 2, y // 2, 200, 100)
-        self.setWindowIcon(QIcon('../icologo.png'))
+        self.setWindowIcon(QIcon('icologo.png'))
         self.setWindowTitle("Добавить запрещенные программы")
 
 
@@ -67,7 +67,7 @@ class AddInList(QDialog):
 
         # Устанавливаем макет для главного окна
         self.setLayout(layout)
-        self.setWindowIcon(QIcon('../icologo.png'))
+        self.setWindowIcon(QIcon('icologo.png'))
         x, y = pyautogui.size()
         self.setGeometry(x//3, y//3, 250, 150)
         self.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
@@ -126,7 +126,7 @@ class DekstopApp(QMainWindow):
             time.sleep(2)
 
     def init_UI_Interact(self):
-        self.setWindowIcon(QIcon('../icologo.png'))  # лого окна приветствия
+        self.setWindowIcon(QIcon('icologo.png'))  # лого окна приветствия
         self.label.resize(self.width(), self.height())  # задем размеры для Label
         x, y = map(int, size())  # размеры экрана
 
