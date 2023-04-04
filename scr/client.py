@@ -1,5 +1,6 @@
 import socket
 
+import pyautogui
 from PIL import ImageGrab
 import io
 
@@ -13,7 +14,7 @@ import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QDialog, QVBoxLayout
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import QRect, Qt
 
 # глоабльные переменные
 list_prohibited_programm = []
@@ -23,7 +24,7 @@ class ViewList(QDialog):
     def __init__(self):
         super(ViewList, self).__init__()
 
-        the_list = ('\n'.join(list_prohibited_programm), "Пусто")[len(list_prohibited_programm)==0]
+        the_list = ('\n'.join(list_prohibited_programm), "Пусто")[len(list_prohibited_programm) == 0]
 
         self.label = QLabel(str(the_list), self)
 
@@ -49,9 +50,11 @@ class AddInList(QDialog):
         self.label = QLabel("Введите название приложение и его формат:", self)
 
         self.line = QLineEdit(self)
+        self.line.resize(10, 200)
 
         button_save = QPushButton("Сохранить", self)
         button_save.clicked.connect(self.save_data)
+        button_save.resize(250, 30)
 
         button_watch = QPushButton("Просмотреть список", self)
         button_watch.clicked.connect(self.watch_list_app)
@@ -65,6 +68,9 @@ class AddInList(QDialog):
         # Устанавливаем макет для главного окна
         self.setLayout(layout)
         self.setWindowIcon(QIcon('../icologo.png'))
+        x, y = pyautogui.size()
+        self.setGeometry(x//3, y//3, 250, 150)
+        self.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
         self.setWindowTitle("Добавить запрещенные программы")
 
     def save_data(self):
@@ -107,7 +113,6 @@ class DekstopApp(QMainWindow):
                     self.sock.send(img_bytes.getvalue())  # отправляем скриншот
 
         except ConnectionResetError:
-            # print(f"// DISCONNECT //")
             sys.exit()
 
     def ThreadProcessInfo(self):
@@ -115,7 +120,6 @@ class DekstopApp(QMainWindow):
             # отслеживание активных процессов и невозможность открыть их
             for procces in process_iter():
                 if procces.name() in list_prohibited_programm:
-                    # print("KILL:", procces.name())
                     self.sock.send(str("Z" + procces.name()).encode())
                     procces.kill()
                     break
