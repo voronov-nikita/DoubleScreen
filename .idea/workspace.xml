@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e049ebdd-fc2e-4791-b796-d598dc971b2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scr/AndroidApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/scr/AndroidApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scr/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scr/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scr/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/scr/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,10 +39,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="ToolWindowStructure.ShowToolbar" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scr" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\MSI\Documents\GitHub\1) Проетк\individual-project\scr" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\MSI\Documents\GitHub\1) Проетк\individual-project" />
       <recent name="C:\Users\MSI\Documents\GitHub\1) Проетк\individual-project\scr" />
@@ -51,8 +54,8 @@
       <recent name="C:\Users\MSI\Documents\GitHub\individual-project" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.server (1)">
-    <configuration name="client (1)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.server">
+    <configuration name="client (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="individual-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -201,10 +204,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.server (1)" />
-        <item itemvalue="Python.client (2)" />
-        <item itemvalue="Python.tests (1)" />
+        <item itemvalue="Python.client (1)" />
         <item itemvalue="Python.server" />
+        <item itemvalue="Python.tests (1)" />
         <item itemvalue="Python.tests" />
       </list>
     </recent_temporary>
