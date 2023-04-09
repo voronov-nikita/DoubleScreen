@@ -59,34 +59,46 @@ class AddInList(QDialog):
         button_watch = QPushButton("Просмотреть список", self)
         button_watch.clicked.connect(self.watch_list_app)
 
+        button_ready = QPushButton("Готово", self)
+        button_ready.clicked.connect(self.close)
+        button_ready.resize(250, 30)
+
         layout = QVBoxLayout()
         layout.addWidget(self.label)
         layout.addWidget(self.line)
         layout.addWidget(button_watch)
         layout.addWidget(button_save)
+        layout.addWidget(button_ready)
 
         # Устанавливаем макет для главного окна
         self.setLayout(layout)
         self.setWindowIcon(QIcon('icologo.png'))
         x, y = pyautogui.size()
         self.setGeometry(x//3, y//3, 250, 150)
-        self.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
+        self.setWindowFlags(Qt.Window | Qt.WindowMinimizeButtonHint | Qt.WindowCloseButtonHint)
         self.setWindowTitle("Добавить запрещенные программы")
 
     def save_data(self):
         text = self.line.text()
         if text not in list_prohibited_programm and text.split() != '':
-            list_prohibited_programm.append(text)
+            list_prohibited_programm.append(text.lower())
         self.line.clear()
+        self.start_clear_programm()
 
     def watch_list_app(self):
         view_list = ViewList()
         view_list.exec_()
 
+    def start_clear_programm(self):
+        for procces in process_iter():
+            if procces.name().lower() in list_prohibited_programm:
+                procces.kill()
+
 
 class DekstopApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.connected = True
         self.pixmap = QPixmap()
         self.label = QLabel(self)
         self.add_new_habita_aplication()
@@ -101,7 +113,8 @@ class DekstopApp(QMainWindow):
             if len(self.ip.text()) != 0 and len(self.port.text()):
                 self.sock = socket.socket()
                 self.sock.connect((self.ip.text(), int(self.port.text())))
-                while True:
+                self.sock.send(str("N" + socket.gethostname()).encode())
+                while self.connected:
                     # <------------------Считывается и обрабатывается информация------------------>
                     img = ImageGrab.grab()
                     img_bytes = io.BytesIO()
@@ -113,13 +126,15 @@ class DekstopApp(QMainWindow):
                     self.sock.send(img_bytes.getvalue())  # отправляем скриншот
 
         except ConnectionResetError:
-            sys.exit()
+            self.connected = False
+            sys.exit(app.exec())
 
     def ThreadProcessInfo(self):
-        while True:
+        while self.connected:
             # отслеживание активных процессов и невозможность открыть их
             for procces in process_iter():
-                if procces.name() in list_prohibited_programm:
+                if procces.name().lower() in list_prohibited_programm:
+                    self.sock.send(str("N" + str(socket.gethostname())).encode())
                     self.sock.send(str("Z" + procces.name()).encode())
                     procces.kill()
                     break
