@@ -60,6 +60,7 @@ class InfoWindow(QMainWindow):
         self.setGeometry(x // 2, y // 2, x // 5, y // 5)
 
         self.Init()
+        self.setWindowFlag(Qt.WindowStaysOnTopHint)
 
     def Init(self):
         x, y = pyautogui.size()
@@ -94,7 +95,6 @@ class Server(QWidget):
         super().__init__()
         self.initAction()
 
-        self.name_window = ""
         self.name_user = ""
         self.show_text = False
         self.list_color = ["#32CD32", "#8B0000", "#C71585", "#008080", "#FFD700", "#191970", "#FFFFFF", "#000000"]
@@ -125,7 +125,6 @@ class Server(QWidget):
                         if message[0] == "A" and message[1:] not in self.open_app:
                             self.open_app.append(message[1:])
                             print(message)
-
                 except:
                     full = self.pixmap.loadFromData(data)
                     if full:
@@ -139,7 +138,7 @@ class Server(QWidget):
                         self.show_text_label()
 
         except ConnectionResetError:
-            self.conn.close()
+            conn.close()
             sys.exit(app.exec_())
 
     def initUI(self):
@@ -155,7 +154,7 @@ class Server(QWidget):
         self.setGeometry(QRect(x // 4, y // 4, x // 2, y // 2))  # окно проецирования
         self.setFixedSize(self.width(), self.height())
         self.start = Thread(target=self.ChangeImage, daemon=True)
-        self.setWindowTitle(f"{addr[0]} - {self.name_window}")  # имя окна
+        self.setWindowTitle(f"RECEIVER")  # имя окна
         self.start.start()
 
     def initAction(self):
@@ -169,6 +168,11 @@ class Server(QWidget):
         action2.setShortcut(QKeySequence("Ctrl+Shift+C"))
         action2.triggered.connect(self.change_color_text)
 
+        action3 = QAction("Выполнить", self)
+        self.addAction(action3)
+        action3.setShortcut(QKeySequence("Ctrl+Shift+X"))
+        action3.triggered.connect(self.pin_top)
+
     def message_app(self, get_message, name):
         message_box = WarningWindow(get_message, name)
         new_thread = Thread(target=message_box.exec_)
@@ -176,6 +180,9 @@ class Server(QWidget):
 
     def change_text_visibility(self):
         self.show_text = (True, False)[self.show_text]
+
+    def pin_top(self):
+        self.setWindowFlag(Qt.WindowStaysOnTopHint)
 
     def change_color_text(self):
         if self.index_list_color == len(self.list_color)-1:
@@ -199,7 +206,7 @@ class Server(QWidget):
             self.label_text2.setFont(self.font_text)
             self.label_text2.setAlignment(Qt.AlignTop | Qt.AlignRight)
 
-            self.label_text3.setText("Down Info")
+            self.label_text3.setText(f"IP: {addr[0]}")
             self.label_text3.setStyleSheet(f"color : {self.color}")
             self.label_text3.setFont(self.font_text)
             self.label_text3.setAlignment(Qt.AlignBottom | Qt.AlignRight)
