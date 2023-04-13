@@ -1,8 +1,7 @@
 import socket
 
-import threading
 import sys
-
+from webbrowser import open_new_tab
 import pyautogui  # много назначений
 
 from threading import Thread  # потоки
@@ -16,10 +15,11 @@ IP = socket.gethostbyname_ex(socket.gethostname())[-1][-1]
 PORT = 9999
 
 
-class ClientTheard(threading.Thread):
+class ClientTheard(Thread):
     def __init__(self):
+        super().__init__()
         self.ex = Server()
-        threading.Thread.__init__(self)
+        Thread.__init__(self)
 
 
 class WarningWindow(QDialog):
@@ -170,8 +170,8 @@ class Server(QWidget):
 
         action3 = QAction("Выполнить", self)
         self.addAction(action3)
-        action3.setShortcut(QKeySequence("Ctrl+Shift+X"))
-        action3.triggered.connect(self.pin_top)
+        action3.setShortcut(QKeySequence("Ctrl+Shift+I"))
+        action3.triggered.connect(self.help_info)
 
     def message_app(self, get_message, name):
         message_box = WarningWindow(get_message, name)
@@ -181,8 +181,8 @@ class Server(QWidget):
     def change_text_visibility(self):
         self.show_text = (True, False)[self.show_text]
 
-    def pin_top(self):
-        self.setWindowFlag(Qt.WindowStaysOnTopHint)
+    def help_info(self):
+        open_new_tab("https://github.com/voronov-nikita/individual-project-2022_2023/blob/main/README.md")
 
     def change_color_text(self):
         if self.index_list_color == len(self.list_color)-1:
@@ -196,7 +196,7 @@ class Server(QWidget):
             self.font_text.setPointSize(18)
             self.font_text.setBold(True)
 
-            self.label_text1.setText(f"Открытые приложения")
+            self.label_text1.setText(f"Статус: Подключено")
             self.label_text1.setStyleSheet(f"color : {self.color}")
             self.label_text1.setFont(self.font_text)
             self.label_text1.setAlignment(Qt.AlignLeft)
