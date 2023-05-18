@@ -65,14 +65,22 @@ class InfoWindow(QMainWindow):
     def Init(self):
         x, y = pyautogui.size()
 
-        self.label = QLabel(f"\t\tIP-aress: {IP}\n\t\tPORT-connected:{PORT}", self)
-        self.label.move(5, 0)
+        self.label = QLabel(f"\t    IP-aress: {IP}\n\t      PORT-connected:{PORT}", self)
+        self.label.move(0, 0)
         self.label.resize(x // 2, y // 9)
+        self.label.setStyleSheet("""
+        background: rgb(31, 31, 31);
+        color: rgb(78, 201, 176);
+        font-weight: bold;""")
 
         button = QPushButton("Запустить", self)
-        button.move(0, 90)
+        button.move(0, 115)
         button.resize(x // 5, y // 10)
         button.clicked.connect(self.start_programm)
+        button.setStyleSheet("""
+        background: rgb(37, 37, 37);
+        color: rgb(177, 128, 215);
+        font-weight: bold;""")
 
         layout = QVBoxLayout()
         layout.addWidget(self.label)

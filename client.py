@@ -150,20 +150,31 @@ class DekstopApp(QMainWindow):
         self.start_process_find = Thread(target=self.ThreadProcessInfo)
 
         self.btn = QPushButton(self)  # кнопка
-        self.btn.move(5, 55)
-        self.btn.resize(490, 50)
+        self.btn.move(0, 55)
+        self.btn.resize(500, 55)
         self.btn.clicked.connect(self.StartThread)
         self.btn.setText("Connected")  # текст кнопки
+        self.btn.setStyleSheet("""
+        background: rgb(31, 31, 31);
+        color: rgb(78, 201, 176);""")
 
         self.ip = QLineEdit(self)  # IP-info
-        self.ip.move(5, 5)  # положение линии ip
-        self.ip.resize(490, 30)  # размеры линии ip
+        self.ip.move(0, 5)  # положение линии ip
+        self.ip.resize(500, 30)  # размеры линии ip
         self.ip.setPlaceholderText("IP-adress")
+        self.ip.setStyleSheet("""
+        background: rgb(40, 40, 40);
+        color: rgb(0, 255, 175);
+        border:0%;""")
 
         self.port = QLineEdit(self)  # PORT- info
-        self.port.move(5, 30)  # положение линии port
-        self.port.resize(490, 30)  # размеры линии port
+        self.port.move(0, 30)  # положение линии port
+        self.port.resize(500, 30)  # размеры линии port
         self.port.setPlaceholderText("PORT-connect")
+        self.port.setStyleSheet("""
+        border: 0%;
+        background: rgb(40, 40, 40);
+        color: rgb(0, 255, 175);""")
 
     def add_new_habita_aplication(self):
         new_window = AddInList()
