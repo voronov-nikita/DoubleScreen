@@ -54,7 +54,7 @@ class InfoWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Information")
-        self.setWindowIcon(QIcon('icologo.png'))
+        self.setWindowIcon(QIcon('../icologo.png'))
         self.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
         x, y = pyautogui.size()
         self.setGeometry(x // 2, y // 2, x // 5, y // 5)

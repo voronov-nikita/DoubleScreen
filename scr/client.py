@@ -30,6 +30,11 @@ class ViewList(QDialog):
 
         button = QPushButton("Закрыть", self)
         button.clicked.connect(self.close)
+        button.setStyleSheet("""
+        background: rgb(31, 31, 31);
+        color: rgb(0, 47, 84);
+        font-weight: bold;
+        """)
 
         layout = QVBoxLayout()
         layout.addWidget(self.label)
@@ -39,7 +44,7 @@ class ViewList(QDialog):
         self.setLayout(layout)
         x, y = size()
         self.setGeometry(x // 2, y // 2, 200, 100)
-        self.setWindowIcon(QIcon('icologo.png'))
+        self.setWindowIcon(QIcon('../icologo.png'))
         self.setWindowTitle("Добавить запрещенные программы")
 
 
@@ -47,34 +52,46 @@ class AddInList(QDialog):
     def __init__(self):
         super().__init__()
 
-        self.label = QLabel("Введите название приложение и его формат:", self)
 
         self.line = QLineEdit(self)
-        self.line.resize(10, 200)
+        self.line.setPlaceholderText("Name and format")
+        self.line.resize(300, 60)
+        self.line.setStyleSheet("""
+        background: rgb(40, 40, 40);
+        color: rgb(0, 255, 175);
+        border: 1px solid rgb(0, 200, 120);
+        """)
 
         button_save = QPushButton("Сохранить", self)
         button_save.clicked.connect(self.save_data)
-        button_save.resize(250, 30)
+        button_save.move(0, 60)
+        button_save.resize(300, 40)
+        button_save.setStyleSheet("""
+        background: rgb(40, 40, 40);
+        color: rgb(0, 255, 175);
+        border:0%;""")
 
         button_watch = QPushButton("Просмотреть список", self)
         button_watch.clicked.connect(self.watch_list_app)
+        button_watch.move(0, 100)
+        button_watch.resize(300, 40)
+        button_watch.setStyleSheet("""
+        background: rgb(40, 40, 40);
+        color: rgb(0, 255, 175);
+        border: dashed red;""")
 
         button_ready = QPushButton("Готово", self)
         button_ready.clicked.connect(self.close)
-        button_ready.resize(250, 30)
+        button_ready.move(0, 140)
+        button_ready.resize(300, 60)
+        button_ready.setStyleSheet("""
+        background: rgb(40, 40, 40);
+        color: rgb(0, 255, 175);
+        border:0%;""")
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.label)
-        layout.addWidget(self.line)
-        layout.addWidget(button_watch)
-        layout.addWidget(button_save)
-        layout.addWidget(button_ready)
-
-        # Устанавливаем макет для главного окна
-        self.setLayout(layout)
-        self.setWindowIcon(QIcon('icologo.png'))
+        self.setWindowIcon(QIcon('../icologo.png'))
         x, y = pyautogui.size()
-        self.setGeometry(x//3, y//3, 250, 150)
+        self.setGeometry(QRect(x//3, y//3, 300, 200))
         self.setWindowFlags(Qt.Window | Qt.WindowMinimizeButtonHint | Qt.WindowCloseButtonHint)
         self.setWindowTitle("Добавить запрещенные программы")
 
@@ -139,7 +156,7 @@ class DekstopApp(QMainWindow):
             time.sleep(2)
 
     def init_UI_Interact(self):
-        self.setWindowIcon(QIcon('icologo.png'))  # лого окна приветствия
+        self.setWindowIcon(QIcon('../icologo.png'))  # лого окна приветствия
         self.label.resize(self.width(), self.height())  # задем размеры для Label
         x, y = map(int, size())  # размеры экрана
 
@@ -156,7 +173,8 @@ class DekstopApp(QMainWindow):
         self.btn.setText("Connected")  # текст кнопки
         self.btn.setStyleSheet("""
         background: rgb(31, 31, 31);
-        color: rgb(78, 201, 176);""")
+        color: rgb(78, 201, 176);
+        font-weight: bold;""")
 
         self.ip = QLineEdit(self)  # IP-info
         self.ip.move(0, 5)  # положение линии ip
